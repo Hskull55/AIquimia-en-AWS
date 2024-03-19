@@ -19,7 +19,7 @@ from . import views
 
 urlpatterns = [
     path('prueba/', views.pagina_prueba, name='pagina_prueba'),
-    path('alquimia/', views.alquimia, name='alquimia'),  # Nueva URL para la vista alquimia
+    path('alquimia/', views.alquimia, name='alquimia'),
 ]
 
 #urlpatterns = [

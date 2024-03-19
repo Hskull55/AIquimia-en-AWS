@@ -3,10 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIlchemy</title>
+    <title>Alquimia</title>
+    <style>
+        #cuadrado {
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+            position: absolute;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <h1>Probando el juego</h1>
-    <p>Irá aquí</p>
+    <div id="cuadrado">IMAGEN</div>
+
+    <script>
+        const cuadrado = document.getElementById('cuadrado');
+        let isDragging = false;
+        let offset = {x: 0, y: 0};
+
+        function startDrag(event) {
+            isDragging = true;
+            offset.x = event.clientX - cuadrado.getBoundingClientRect().left;
+            offset.y = event.clientY - cuadrado.getBoundingClientRect().top;
+        }
+
+        function drag(event) {
+            if (isDragging) {
+                cuadrado.style.left = (event.clientX - offset.x) + 'px';
+                cuadrado.style.top = (event.clientY - offset.y) + 'px';
+            }
+        }
+
+        function endDrag() {
+            isDragging = false;
+        }
+
+        cuadrado.addEventListener('mousedown', startDrag);
+        document.addEventListener('mousemove', drag);
+        document.addEventListener('mouseup', endDrag);
+    </script>
 </body>
 </html>
