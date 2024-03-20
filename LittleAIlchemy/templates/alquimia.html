@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AIquimia</title>
     <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+        }
+
+        .izquierda {
+            width: calc(100% - 350px);
+            background-color: white;
+        }
+
+        .derecha {
+            width: calc(350px);
+            background-color: #f8f8e7;
+        }
+
         .cuadrado {
             width: 100px;
             height: 100px;
@@ -15,19 +32,22 @@
         #cuadrado1 {
             background-color: blue;
             top: 50px;
-            right: 50px;
+            right: 200px;
         }
 
         #cuadrado2 {
             background-color: red;
             top: 50px;
-            right: 200px;
+            right: 50px;
         }
     </style>
 </head>
 <body>
-    <div id="cuadrado1" class="cuadrado">IMAGEN</div>
-    <div id="cuadrado2" class="cuadrado">IMAGEN</div>
+    <div class="izquierda"></div>
+    <div class="derecha">
+        <div id="cuadrado1" class="cuadrado">IMAGEN</div>
+        <div id="cuadrado2" class="cuadrado">IMAGEN</div>
+    </div>
 
     <script>
         const cuadrado1 = document.getElementById('cuadrado1');
