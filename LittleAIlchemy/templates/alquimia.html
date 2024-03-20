@@ -3,45 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alquimia</title>
+    <title>AIquimia</title>
     <style>
-        #cuadrado {
+        .cuadrado {
             width: 100px;
             height: 100px;
-            background-color: blue;
             position: absolute;
             cursor: pointer;
+        }
+
+        #cuadrado1 {
+            background-color: blue;
+            top: 50px;
+            right: 50px;
+        }
+
+        #cuadrado2 {
+            background-color: red;
+            top: 50px;
+            right: 200px;
         }
     </style>
 </head>
 <body>
-    <div id="cuadrado">IMAGEN</div>
+    <div id="cuadrado1" class="cuadrado">IMAGEN</div>
+    <div id="cuadrado2" class="cuadrado">IMAGEN</div>
 
     <script>
-        const cuadrado = document.getElementById('cuadrado');
-        let isDragging = false;
-        let offset = {x: 0, y: 0};
+        const cuadrado1 = document.getElementById('cuadrado1');
+        const cuadrado2 = document.getElementById('cuadrado2');
 
-        function startDrag(event) {
-            isDragging = true;
-            offset.x = event.clientX - cuadrado.getBoundingClientRect().left;
-            offset.y = event.clientY - cuadrado.getBoundingClientRect().top;
+        let arrastrando = false;
+        let desplazamiento = {x: 0, y: 0};
+        let cuadradoActivo = null;
+
+        function comenzarArrastre(evento) {
+            arrastrando = true;
+            cuadradoActivo = this;
+            desplazamiento.x = evento.clientX - cuadradoActivo.getBoundingClientRect().left;
+            desplazamiento.y = evento.clientY - cuadradoActivo.getBoundingClientRect().top;
         }
 
-        function drag(event) {
-            if (isDragging) {
-                cuadrado.style.left = (event.clientX - offset.x) + 'px';
-                cuadrado.style.top = (event.clientY - offset.y) + 'px';
+        function arrastrar(evento) {
+            if (arrastrando && cuadradoActivo) {
+                cuadradoActivo.style.left = (evento.clientX - desplazamiento.x) + 'px';
+                cuadradoActivo.style.top = (evento.clientY - desplazamiento.y) + 'px';
             }
         }
 
-        function endDrag() {
-            isDragging = false;
+        function finalizarArrastre() {
+            arrastrando = false;
+            cuadradoActivo = null;
         }
 
-        cuadrado.addEventListener('mousedown', startDrag);
-        document.addEventListener('mousemove', drag);
-        document.addEventListener('mouseup', endDrag);
+        cuadrado1.addEventListener('mousedown', comenzarArrastre);
+        cuadrado2.addEventListener('mousedown', comenzarArrastre);
+
+        document.addEventListener('mousemove', arrastrar);
+        document.addEventListener('mouseup', finalizarArrastre);
     </script>
 </body>
 </html>
