@@ -9,17 +9,20 @@
             margin: 0;
             padding: 0;
             display: flex;
-            height: 100vh;
+	    height: 100vh;
         }
 
         .izquierda {
             width: calc(100% - 350px);
+	    flex: 1;
             background-color: white;
         }
 
         .derecha {
-            width: calc(350px);
+		
+            width: 350px;
             background-color: #f8f8e7;
+	    position: relative;
         }
 
         .cuadrado {
@@ -27,6 +30,10 @@
             height: 100px;
             position: absolute;
             cursor: pointer;
+        }
+
+        .contenedor-cuadrados {
+            height: 100%;
         }
 
         #cuadrado1 {
@@ -40,47 +47,130 @@
             top: 50px;
             right: 50px;
         }
+
+        #cuadrado3 {
+            background-color: green;
+            top: 200px;
+            right: 200px;
+        }
+
+        #cuadrado4 {
+            background-color: yellow;
+            top: 200px;
+            right: 50px;
+        }
+
+        #cuadrado5 {
+            background-color: purple;
+            top: 350px;
+            right: 200px;
+        }
+
+        #cuadrado6 {
+            background-color: orange;
+            top: 350px;
+            right: 50px;
+        }
+
+        #cuadrado7 {
+            background-color: pink;
+            top: 500px;
+            right: 200px;
+        }
+
+        #cuadrado8 {
+            background-color: cyan;
+            top: 500px;
+            right: 50px;
+        }
+
+        #cuadrado9 {
+            background-color: gray;
+            top: 650px;
+            right: 200px;
+        }
+
+        #cuadrado10 {
+            background-color: brown;
+            top: 650px;
+            right: 50px;
+        }
+
+        #cuadrado11 {
+            background-color: aqua;
+            top: 800px;
+            right: 200px;
+        }
+
+        #cuadrado12 {
+            background-color: magenta;
+            top: 800px;
+            right: 50px;
+        }
+
+        #cuadrado13 {
+            background-color: lime;
+            top: 950px;
+            right: 200px;
+        }
+
+        #cuadrado14 {
+            background-color: silver;
+            top: 950px;
+            right: 50px;
+        }
     </style>
 </head>
 <body>
     <div class="izquierda"></div>
     <div class="derecha">
-        <div id="cuadrado1" class="cuadrado">IMAGEN</div>
-        <div id="cuadrado2" class="cuadrado">IMAGEN</div>
+        <div class="contenedor-cuadrados">
+            <div id="cuadrado1" class="cuadrado">IMAGEN</div>
+	    <div id="cuadrado2" class="cuadrado">IMAGEN</div>
+            <div id="cuadrado3" class="cuadrado">IMAGEN</div>
+            <div id="cuadrado4" class="cuadrado">IMAGEN</div>
+            <div id="cuadrado5" class="cuadrado">IMAGEN</div>
+            <div id="cuadrado6" class="cuadrado">IMAGEN</div>
+            <div id="cuadrado7" class="cuadrado">IMAGEN</div>
+            <div id="cuadrado8" class="cuadrado">IMAGEN</div>
+            <div id="cuadrado9" class="cuadrado">IMAGEN</div>
+            <div id="cuadrado10" class="cuadrado">IMAGEN</div>
+            <div id="cuadrado11" class="cuadrado">IMAGEN</div>
+            <div id="cuadrado12" class="cuadrado">IMAGEN</div>
+            <div id="cuadrado13" class="cuadrado">IMAGEN</div>
+            <div id="cuadrado14" class="cuadrado">IMAGEN</div>        
     </div>
+<script>
+    const cuadrados = document.querySelectorAll('.cuadrado');
+    let arrastrando = false;
+    let desplazamiento = {x: 0, y: 0};
+    let cuadradoActivo = null;
 
-    <script>
-        const cuadrado1 = document.getElementById('cuadrado1');
-        const cuadrado2 = document.getElementById('cuadrado2');
+    function comenzarArrastre(evento) {
+        arrastrando = true;
+        cuadradoActivo = this;
+        desplazamiento.x = evento.clientX - cuadradoActivo.offsetLeft;
+        desplazamiento.y = evento.clientY - cuadradoActivo.offsetTop;
+    }
 
-        let arrastrando = false;
-        let desplazamiento = {x: 0, y: 0};
-        let cuadradoActivo = null;
-
-        function comenzarArrastre(evento) {
-            arrastrando = true;
-            cuadradoActivo = this;
-            desplazamiento.x = evento.clientX - cuadradoActivo.getBoundingClientRect().left;
-            desplazamiento.y = evento.clientY - cuadradoActivo.getBoundingClientRect().top;
+    function arrastrar(evento) {
+        if (arrastrando && cuadradoActivo) {
+            cuadradoActivo.style.left = (evento.clientX - desplazamiento.x) + 'px';
+            cuadradoActivo.style.top = (evento.clientY - desplazamiento.y) + 'px';
         }
+    }
 
-        function arrastrar(evento) {
-            if (arrastrando && cuadradoActivo) {
-                cuadradoActivo.style.left = (evento.clientX - desplazamiento.x) + 'px';
-                cuadradoActivo.style.top = (evento.clientY - desplazamiento.y) + 'px';
-            }
-        }
+    function finalizarArrastre() {
+        arrastrando = false;
+        cuadradoActivo = null;
+    }
 
-        function finalizarArrastre() {
-            arrastrando = false;
-            cuadradoActivo = null;
-        }
+    cuadrados.forEach(cuadrado => {
+        cuadrado.addEventListener('mousedown', comenzarArrastre);
+    });
 
-        cuadrado1.addEventListener('mousedown', comenzarArrastre);
-        cuadrado2.addEventListener('mousedown', comenzarArrastre);
-
-        document.addEventListener('mousemove', arrastrar);
-        document.addEventListener('mouseup', finalizarArrastre);
-    </script>
+    document.addEventListener('mousemove', arrastrar);
+    document.addEventListener('mouseup', finalizarArrastre);
+</script>
 </body>
 </html>
