@@ -1,3 +1,20 @@
-h1 {
-    color: blue;
+body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        height: 100vh;
+}
+
+.izquierda {
+        width: calc(100% - 350px);
+	flex: 1;
+        background-color: white;
+	widht: 100vh;
+}
+
+.derecha {
+        width: 350px;
+        background-color: #f8f8e7;
+	position: relative;
+	height: 100vh;
 }
