@@ -1,4 +1,4 @@
-# Little-AIlchemy-en-AWS
+# Little AIlchemy en AWS
 Estamos trabajando en ello...
 
 ## Páginas y recuros consultados para la realización de este proyecto:
