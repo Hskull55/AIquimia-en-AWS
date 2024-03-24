@@ -23,7 +23,7 @@ body {
     overflow: scroll;
 }
 
-.contenedorElementos{
+.contenedor{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -40,10 +40,11 @@ body {
 }
 
 .vacio {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     border: 2px dashed black;
     margin: 10px;
+    align-items:center;
 }
 
 .elemento.arrastrando{

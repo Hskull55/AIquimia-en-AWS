@@ -17,6 +17,14 @@ contenedores.forEach(contenedor => {
   contenedor.addEventListener('dragover', e => {
     e.preventDefault()
     const elemento = document.querySelector('.arrastrando')
-    contenedor.appendChild(elemento)
+    const elementosEnContenedor = contenedor.querySelectorAll('.elemento');
+
+    //Esto es para que se pueda arrastrar solo un elemento por casilla vacía
+    if (contenedor.classList.contains('vacio') && elementosEnContenedor.length === 0) {
+        contenedor.appendChild(elemento);
+    } else if (!contenedor.classList.contains('vacio')) {
+        contenedor.appendChild(elemento);
+    }
+
   })
 })
