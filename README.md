@@ -7,4 +7,4 @@ Estamos trabajando en ello...
 - [Stack Overflow](https://stackoverflow.com/)
 - [Reddit - Django](https://www.reddit.com/r/django/)
 - [ChatGPT](https://chat.openai.com/)
-
+- [W3Schools - CSS](https://www.w3schools.com/cssref)
