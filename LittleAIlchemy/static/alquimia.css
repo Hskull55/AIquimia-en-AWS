@@ -34,6 +34,9 @@ body {
     background-color: lightblue;
     border: 1px solid blue;
     margin: 5px; 
+    line-height: 100px;
+    text-align: center;
+    cursor: grab;
 }
 
 .vacio {
@@ -41,4 +44,8 @@ body {
     height: 100px;
     border: 2px dashed black;
     margin: 10px;
+}
+
+.elemento.arrastrando{
+    opacity: .5;
 }
