@@ -20,12 +20,10 @@
     </div>
     <div class="derecha">
 	<div class="contenedorElementos contenedor">
-            <div class="elemento" draggable="true">{{ nombre_prueba }}</div>
-            <div class="elemento" draggable="true">Elemento 2</div>
-            <div class="elemento" draggable="true">Elemento 3</div>
-            <div class="elemento" draggable="true">Elemento 4</div>
-            <div class="elemento" draggable="true">Elemento 5</div>
-    	</div>
+        {% for nombre in nombres %}
+            <div class="elemento" draggable="true">{{ nombre }}</div>
+        {% endfor %}    	
+        </div>
     </div>
 
 </body>

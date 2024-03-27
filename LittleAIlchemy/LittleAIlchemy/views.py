@@ -3,9 +3,8 @@ from .models import Prueba
 import datetime
 
 def alquimia(request):
-    objeto_prueba = Prueba.objects.get(id=1)
-    nombre_prueba = objeto_prueba.nombre
-    return render(request, 'alquimia.html', {'nombre_prueba': nombre_prueba})
+    nombres = Prueba.objects.all
+    return render(request, 'alquimia.html', {'nombres': nombres})
 
 def inicio(request):
     return render(request, 'inicio.html')
