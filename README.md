@@ -9,3 +9,4 @@ Estamos trabajando en ello...
 - [ChatGPT](https://chat.openai.com/)
 - [W3Schools - CSS](https://www.w3schools.com/cssref)
 - [Youtube - Web Dev Simplified](https://www.youtube.com/@WebDevSimplified)
+- [DigitalOcean](https://www.digitalocean.com/)
