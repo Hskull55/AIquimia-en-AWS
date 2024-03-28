@@ -1,8 +1,7 @@
-body {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    height: 100vh;
+h1{
+    color: white;
+    font-weight: bold;
+    font-family: sans-serif;
 }
 
 button{
@@ -14,6 +13,31 @@ button{
     font-weight: bold;
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
     cursor: pointer;
+}
+
+button:hover{
+    background-color: #ffffff; 
+    transform: scale(1.1); 
+    box-shadow: 4px 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.bodyAlquimia {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+}
+
+.bodyInicio{
+    background-image: url(imagenes/aiquimiaInicio.jpeg);
+    background-repeat: no-repeat;
+    background-position: top;
+    background-color: #020006;
+    background-size: auto 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .izquierda {
