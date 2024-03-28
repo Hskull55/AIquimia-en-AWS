@@ -12,11 +12,14 @@
 
 <body>
     <div class="izquierda">
+      <div class="superior">
         <div class="vacio contenedor"></div>
         <div>+</div>
         <div class="vacio contenedor"></div>
         <div>=</div>
      	<img src="{% static 'interrogacion.png' %}" alt="?" class="vacio" draggable="false">
+      </div>
+      <div class="inferior"><button onclick="combinar()">Combinar</button></div>
     </div>
     <div class="derecha">
 	<div class="contenedorElementos contenedor">
@@ -25,6 +28,5 @@
         {% endfor %}    	
         </div>
     </div>
-
 </body>
 </html>

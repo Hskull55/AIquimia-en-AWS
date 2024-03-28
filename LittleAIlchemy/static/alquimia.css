@@ -10,16 +10,16 @@ body {
     align-items: center;
     justify-content: center;
     background-color: white;
-    /*border: 2px solid black;*/
+    border: 2px solid black;
     flex: 1;
-    height: 100vh;
+    flex-direction: column;
 }
 
 .derecha {
     width: 375px;
     background-color: #f8f8e7;
-    /*border: 2px solid black;*/
-    min-height: 100vh;
+    border: 2px solid black;
+    border-left-width: 0;
     overflow: scroll;
 }
 
@@ -28,6 +28,13 @@ body {
     flex-wrap: wrap;
     justify-content: center;
 }
+
+.superior{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .elemento {
     width: 100px;
     height: 100px;
