@@ -20,8 +20,8 @@
     </div>
     <div class="derecha">
 	<div class="contenedorElementos contenedor">
-        {% for nombre in nombres %}
-            <div class="elemento" draggable="true">{{ nombre }}</div>
+        {% for elemento in listaElementos %}
+            <div id="{{ elemento.id }}" class="elemento" draggable="true">{{ elemento.nombre }}</div>
         {% endfor %}    	
         </div>
     </div>
