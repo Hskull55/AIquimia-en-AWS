@@ -11,6 +11,7 @@
 </head>
 
 <body class="bodyAlquimia">
+  <div class="contenedorAlquimia">
     <div class="izquierda">
       <div class="superior">
         <div class="vacio contenedor"></div>
@@ -19,7 +20,7 @@
         <div>=</div>
      	<img src="{% static 'imagenes/interrogacion.png' %}" alt="?" class="vacio" draggable="false">
       </div>
-      <div class="inferior"><button onclick="combinar()">Combinar</button></div>
+      <div><button onclick="combinar()">Combinar</button></div>
     </div>
     <div class="derecha">
 	<div class="contenedorElementos contenedor">
@@ -28,5 +29,7 @@
         {% endfor %}    	
         </div>
     </div>
+  </div>
+  <div class="nav"><button class="inicio" onclick="window.location.href='/'">Volver</button></div>   
 </body>
 </html>

@@ -21,13 +21,17 @@ button:hover{
     box-shadow: 4px 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.bodyAlquimia {
+.contenedorAlquimia {
     margin: 0;
     padding: 0;
     display: flex;
-    height: 100vh;
+    height: calc(100vh - 75px);
 }
 
+.bodyAlquimia{
+    padding: 0;
+    margin: 0;
+}
 .bodyInicio{
     background-image: url(imagenes/aiquimiaInicio.jpeg);
     background-repeat: no-repeat;
@@ -95,4 +99,14 @@ button:hover{
 
 .elemento.arrastrando{
     opacity: .5;
+}
+
+.nav {
+    height: 75px;
+    background: aliceblue;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    border-left: 3px solid black;
+    border-right: 3px solid black;
 }

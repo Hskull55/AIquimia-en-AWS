@@ -35,7 +35,7 @@ function combinar() {
     var textos = [];
 
     // Esto es una función anónima. La he usado porque no necesito tener esta función fuera de "combinar".
-    // Es la forma de decirle al forEach que tiene que hacer en cada iteración.
+    // Es la forma de decirle al forEach lo que tiene que hacer en cada iteración.
     // https://www.javascripttutorial.net/javascript-anonymous-functions/
     contenedoresVacios.forEach(function(contenedor) {
         var elemento = contenedor.querySelector('.elemento');
