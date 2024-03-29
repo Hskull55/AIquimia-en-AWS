@@ -10,3 +10,4 @@ Estamos trabajando en ello...
 - [W3Schools - CSS](https://www.w3schools.com/cssref)
 - [Youtube - Web Dev Simplified](https://www.youtube.com/@WebDevSimplified)
 - [DigitalOcean](https://www.digitalocean.com/)
+- [JavaScript Tutorial](https://www.javascripttutorial.net)
