@@ -7,12 +7,14 @@
     <title>AIquimia</title>
     {% load static %}
     <script src="{% static 'alquimia.js' %}" defer></script>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'imagenes/favicon.ico' %}">
     <link rel="stylesheet" href="{% static 'alquimia.css' %}">
 </head>
 
 <body class="bodyInicio">
     <h1>INICIO</h1> 
     <button onclick="window.location.href='alquimia'">Jugar a AIquimia</button>
+    <button onclick="window.location.href='admin'">Consola de administración</button>
 </body>
 
 </html>

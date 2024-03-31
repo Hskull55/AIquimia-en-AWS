@@ -44,6 +44,9 @@ button:hover{
     align-items: center;
 }
 
+.bodyInicio button{
+    margin-top: 10px;
+}
 .izquierda {
     display: flex;
     align-items: center;
