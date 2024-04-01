@@ -21,7 +21,11 @@
         <div>=</div>
      	<img src="{% static 'imagenes/interrogacion.png' %}" alt="?" class="vacio" draggable="false">
       </div>
-      <div><button onclick="combinar()">Combinar</button></div>
+      <form id="formCombinar" action="" method="post">{% csrf_token %}
+        <input type="hidden" name="elementoId[]" id="hidden1">
+        <input type="hidden" name="elementoId[]" id="hidden2">
+        <button type="button" onclick="combinar()">Combinar</button>
+      </form>
     </div>
     <div class="derecha">
 	<div class="contenedorElementos contenedor">

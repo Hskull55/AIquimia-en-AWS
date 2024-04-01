@@ -47,4 +47,9 @@ function combinar() {
         }
     });
     alert("Elemento 1: ID - " + ids[0] + ", Texto - " + textos[0] + "\nElemento 2: ID - " + ids[1] + ", Texto - " + textos[1]);
+
+    document.getElementById('hidden1').value = ids.length > 0 ? ids[0] : '';
+    document.getElementById('hidden2').value = ids.length > 1 ? ids[1] : '';
+
+    document.getElementById('formCombinar').submit();
 }
