@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect
 from .models import dbElementos
+from .models import dbCombinaciones
 import datetime
 
 @csrf_protect
@@ -21,6 +22,10 @@ def alquimia(request):
         nuevoElemento = dbElementos(nombre=nombre)
         nuevoElemento.save()
 
+        #descripcion = "TBD"
+        #imagen = "TBD"
+        nuevaCombinacion = dbCombinaciones(elemento1=elemento1, elemento2=elemento2, resultado=nombre)
+        nuevaCombinacion.save()
     return render(request, 'alquimia.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento})
 
 def inicio(request):

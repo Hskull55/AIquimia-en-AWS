@@ -12,30 +12,31 @@
 </head>
 
 <body class="bodyAlquimia">
-<div id="nuevoElemento" style="display: none;">{{ nuevoElemento }}</div>
-  <div class="contenedorAlquimia">
-    <div class="izquierda">
-      <div class="superior">
-        <div class="vacio contenedor"></div>
-        <div>+</div>
-        <div class="vacio contenedor"></div>
-        <div>=</div>
-     	<img src="{% static 'imagenes/interrogacion.png' %}" alt="?" class="vacio" draggable="false">
-      </div>
-      <form id="formCombinar" action="" method="post">{% csrf_token %}
-        <input type="hidden" name="elementoId[]" id="hidden1">
-        <input type="hidden" name="elementoId[]" id="hidden2">
-        <button type="button" onclick="combinar()">Combinar</button>
-      </form>
-    </div>
-    <div class="derecha">
-	<div class="contenedorElementos contenedor">
-        {% for elemento in listaElementos %}
-            <div id="{{ elemento.id }}" class="elemento" draggable="true">{{ elemento.nombre }}</div>
-        {% endfor %}    	
+    <div id="nuevoElemento" style="display: none;">{{ nuevoElemento }}</div>
+    <div class="contenedorAlquimia">
+        <div class="izquierda">
+            <div class="superior">
+                <div class="vacio contenedor"></div>
+                <div>+</div>
+                <div class="vacio contenedor"></div>
+                <div>=</div>
+                <img src="{% static 'imagenes/interrogacion.png' %}" alt="?" class="vacio" draggable="false">
+            </div>
+            <form id="formCombinar" action="" method="post">{% csrf_token %}
+                <input type="hidden" name="elementoId[]" id="hidden1">
+                <input type="hidden" name="elementoId[]" id="hidden2">
+                <button type="button" onclick="combinar()">Combinar</button>
+            </form>
+        </div>
+        <div class="derecha">
+            <div class="contenedorElementos contenedor">
+                {% for elemento in listaElementos %}
+                <div id="{{ elemento.id }}" class="elemento" draggable="true">{{ elemento.nombre }}</div>
+                {% endfor %}
+            </div>
         </div>
     </div>
-  </div>
-  <div class="nav"><button class="inicio" onclick="window.location.href='/'">Volver</button></div>   
+    <div class="nav"><button class="inicio" onclick="window.location.href='/'">Volver</button></div>
 </body>
+
 </html>
