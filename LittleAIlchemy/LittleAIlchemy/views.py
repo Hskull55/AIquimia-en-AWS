@@ -6,6 +6,8 @@ import datetime
 @csrf_protect
 def alquimia(request):
     listaElementos = dbElementos.objects.all
+    nuevoElemento = None
+
     if request.method == 'POST':
         elementoId1 = request.POST.getlist('elementoId[]')[0]
         elementoId2 = request.POST.getlist('elementoId[]')[1]
@@ -14,12 +16,12 @@ def alquimia(request):
         elementoId2 = elementoId2 if elementoId2 != '' else '1'
 
         elemento1 = dbElementos.objects.filter(id=elementoId1).first()
-        elemento2 = db.Elementos.objects.filter(id=elementoId2).first()
+        elemento2 = dbElementos.objects.filter(id=elementoId2).first()
         nombre = f"{elemento1}{elemento2}"
         nuevoElemento = dbElementos(nombre=nombre)
         nuevoElemento.save()
 
-    return render(request, 'alquimia.html', {'listaElementos': listaElementos})
+    return render(request, 'alquimia.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento})
 
 def inicio(request):
     return render(request, 'inicio.html')

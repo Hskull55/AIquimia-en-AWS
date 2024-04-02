@@ -48,8 +48,17 @@ function combinar() {
     });
 //    alert("Elemento 1: ID - " + ids[0] + ", Texto - " + textos[0] + "\nElemento 2: ID - " + ids[1] + ", Texto - " + textos[1]);
 
+    // Si en el array ids hay más de 0 elementos, el value del hidden1 será el id del primer elemento. Lo mismo para el segundo.
     document.getElementById('hidden1').value = ids.length > 0 ? ids[0] : '';
     document.getElementById('hidden2').value = ids.length > 1 ? ids[1] : '';
 
     document.getElementById('formCombinar').submit();
 }
+
+// Alert para informar de la creación d eun nuevo elemento
+window.onload = function() {
+            var nuevoElemento = document.getElementById('nuevoElemento').innerText;
+	    if (nuevoElemento !== "None") {
+                alert("Has creado el elemento " + nuevoElemento);
+	    }
+        };
