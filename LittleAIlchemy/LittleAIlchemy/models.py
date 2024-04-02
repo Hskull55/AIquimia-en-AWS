@@ -1,19 +1,21 @@
 from django.db import models
 
-# Modelo de prueba
-class Prueba(models.Model):
+# Modelo para los elementos
+class dbElementos(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=255)
 
     class Meta:
         app_label = 'LittleAIlchemy'
-        db_table = 'prueba'
+        db_table = 'elementos'
+        verbose_name = "Elemento"
+        verbose_name_plural = "Elementos"
 
     def __str__(self):
         return self.nombre
 
-# Modelo de prueba (real)
-class Combinaciones(models.Model):
+# Modelo para las combinaciones
+class dbCombinaciones(models.Model):
     id = models.AutoField(primary_key=True)
     elemento1 = models.CharField(max_length=255)
     elemento2 = models.CharField(max_length=255)
