@@ -59,6 +59,8 @@ function combinar() {
 window.onload = function () {
     var nuevoElemento = document.getElementById('nuevoElemento').innerText;
     if (nuevoElemento !== "None") {
-        alert("Has creado el elemento " + nuevoElemento);
+	    swal("Has creado el elemento " + nuevoElemento, "TBD", {
+		button: "Sencillamente impresionante",
+	    });
     }
 };

@@ -113,3 +113,30 @@ button:hover{
     border-left: 3px solid black;
     border-right: 3px solid black;
 }
+
+.swal-title {
+    color: black;
+    font-size: 20px;
+}
+
+.swal-modal{
+    background-color: #f8f8e7;
+    border: 2px solid black;  
+}
+
+.swal-button-container {
+    text-align: center;
+    display: block;
+}
+
+.swal-button {
+    padding: 15px 30px;
+    border: 2px solid black;
+    background-color: lightblue;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+    color:black;
+}
+
+.swal-button:not([disabled]):hover {
+    background-color: white;
+}
