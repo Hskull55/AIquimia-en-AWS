@@ -3,6 +3,7 @@
 const elementos = document.querySelectorAll('.elemento')
 const contenedores = document.querySelectorAll('.contenedor')
 
+// Control del arrastre de los elementos
 elementos.forEach(elemento => {
     elemento.addEventListener('dragstart', () => {
         elemento.classList.add('arrastrando')
@@ -29,6 +30,7 @@ contenedores.forEach(contenedor => {
     })
 })
 
+// Función que obtiene los ids y los nombres de los elementos para combinarlos
 function combinar() {
     var contenedoresVacios = document.querySelectorAll('.izquierda .vacio.contenedor');
     var ids = [];

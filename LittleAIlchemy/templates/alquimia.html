@@ -5,38 +5,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AIquimia</title>
-    {% load static %}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert"></script>
-    <script src="{% static 'alquimia.js' %}" defer></script>
-    <link rel="shortcut icon" type="image/x-icon" href="{% static 'imagenes/favicon.ico' %}">
-    <link rel="stylesheet" href="{% static 'alquimia.css' %}">
+    {% load static %} <!-- Cargar archivos estáticos -->
+    <!-- Biblioteca SweetAlert para alert personalizado -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert"></script> 
+    <script src="{% static 'alquimia.js' %}" defer></script> <!-- JavaScript-->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'imagenes/favicon.ico' %}"> <!-- Favicon -->
+    <link rel="stylesheet" href="{% static 'alquimia.css' %}"> <!-- CSS -->
 </head>
 
 <body class="bodyAlquimia">
+    <!-- Este div se utiliza para guardar el elemento creado después de procesar el formulario -->
     <div id="nuevoElemento" style="display: none;">{{ nuevoElemento }}</div>
     <div class="contenedorAlquimia">
+	<!-- Zona para combinar los elementos -->
         <div class="izquierda">
             <div class="superior">
                 <div class="vacio contenedor"></div>
-                <div>+</div>
+                <div class="math">+</div>
                 <div class="vacio contenedor"></div>
-                <div>=</div>
+                <div class="math">=</div>
                 <img src="{% static 'imagenes/interrogacion.png' %}" alt="?" class="vacio" draggable="false">
             </div>
+	    <!-- Formulario que envía los elementos a combinar -->
             <form id="formCombinar" action="" method="post">{% csrf_token %}
                 <input type="hidden" name="elementoId[]" id="hidden1">
                 <input type="hidden" name="elementoId[]" id="hidden2">
                 <button type="button" onclick="combinar()">Combinar</button>
             </form>
         </div>
+        <!-- Zona que contiene los elementos del usuario -->
         <div class="derecha">
             <div class="contenedorElementos contenedor">
-                {% for elemento in listaElementos %}
+                <!-- Bucle que muestra todos los elementos de la base de datos -->
+		{% for elemento in listaElementos %}
                 <div id="{{ elemento.id }}" class="elemento" draggable="true">{{ elemento.nombre }}</div>
                 {% endfor %}
             </div>
         </div>
     </div>
+    <!-- Barra de navegación inferior -->
     <div class="nav"><button class="inicio" onclick="window.location.href='/'">Volver</button></div>
 </body>
 
