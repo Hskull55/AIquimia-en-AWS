@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect
 from .models import dbElementos
 from .models import dbCombinaciones
+from .testLlama import combinarAPI
 import datetime
 
 @csrf_protect
@@ -24,6 +25,10 @@ def alquimia(request):
         elemento1 = dbElementos.objects.filter(id=elementoId1).first()
         elemento2 = dbElementos.objects.filter(id=elementoId2).first()
         nombre = f"{elemento1}{elemento2}"
+        nuevoElemento = dbElementos(nombre=nombre)
+        #nombre1 = elemento1.nombre
+        #nombre2 = elemento2.nombre
+        #nombre = combinarAPI(nombre1, nombre2)
         nuevoElemento = dbElementos(nombre=nombre)
         nuevoElemento.save()
 
