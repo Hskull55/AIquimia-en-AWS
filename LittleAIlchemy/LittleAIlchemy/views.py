@@ -10,6 +10,7 @@ def alquimia(request):
     listaElementos = dbElementos.objects.all
     # Inicializamos nuevoElemento sin valor para evitar errores al cargar la página
     nuevoElemento = None
+    error = None
 
     if request.method == 'POST':
 	# Asignamos los ids de los elementos a una variable
@@ -29,7 +30,7 @@ def alquimia(request):
             "top_p": 1,
             "prompt": f"Tell me the result of combining {elemento1} and {elemento2}",
             "temperature": 0.75,
-            "system_prompt": "You are an AI that combines elements as if we were playing the videogame Little Alchemy.You need to come up with the result of combining both an as output, write in a single word said result. Do not say anything else in the output. Just one single word.",
+            "system_prompt": "You are an AI that combines elements as if we were playing the videogame Little Alchemy.You need to come up with the result of combining both an as output, write in a single word said result. Do not say anything else in the output. Just one single word. If both elements are the same, come up with a different one. You can create things that aren't actually elemnts, such as 'Car', 'House', 'Human', etc. as well as verbs and adjectives. The result can be a Copyrighted word such as 'Pokémon' or 'Ghostbusters'",
             "max_new_tokens": 800,
             "repetition_penalty": 1
         }
@@ -40,7 +41,7 @@ def alquimia(request):
         # La API devuelve una lista de Python, así que hay que juntarlo todo
         resultadoCombinacion = ''.join(output).strip() if output else None
         #print(resultadoCombinacion) --> Debugging
-        if resultadoCombinacion:
+        if resultadoCombinacion and len(resultadoCombinacion.split()) == 1:
 	    # Guardamos la combinación en la base de datos si se ha generado correctamente un resultado
             nuevoElemento = dbElementos(nombre=resultadoCombinacion)
             nuevoElemento.save()
@@ -49,8 +50,11 @@ def alquimia(request):
             #imagen = "TBD"
             nuevaCombinacion = dbCombinaciones(elemento1=elemento1, elemento2=elemento2, resultado=resultadoCombinacion)
             nuevaCombinacion.save()
+        # Este error se mostrará en un alert si la IA devuelve más de una palabra
+        else:
+            error = "Ha ocurrido algo inesperado. Inténtalo otra vez"
 
-    return render(request, 'alquimia.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento})
+    return render(request, 'alquimia.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error})
 
 def inicio(request):
     return render(request, 'inicio.html')

@@ -1,3 +1,4 @@
+
 //JavaScript para el juego
 
 const elementos = document.querySelectorAll('.elemento')
@@ -57,12 +58,20 @@ function combinar() {
     document.getElementById('formCombinar').submit();
 }
 
-// Alert para informar de la creación d eun nuevo elemento
+// Alert para informar de la creación de un nuevo elemento / Error
 window.onload = function () {
     var nuevoElemento = document.getElementById('nuevoElemento').innerText;
+
     if (nuevoElemento !== "None") {
 	    swal("Has creado el elemento " + nuevoElemento, "TBD", {
 		button: "Sencillamente impresionante",
+	    });
+    }
+
+    var error = document.getElementById('error').innerText;
+    if (error !== "None") {
+	    swal(error, "Sentimos las molestias", {
+		button: "D'oh!",
 	    });
     }
 };

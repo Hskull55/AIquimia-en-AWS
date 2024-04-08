@@ -45,6 +45,14 @@
     </div>
     <!-- Barra de navegación inferior -->
     <div class="nav"><button class="inicio" onclick="window.location.href='/'">Volver</button></div>
+    
+
+    {% if error %}
+        <div id="error" style="display: none;">
+            {{ error }}
+        </div>
+    {% endif %}
+
 </body>
 
 </html>
