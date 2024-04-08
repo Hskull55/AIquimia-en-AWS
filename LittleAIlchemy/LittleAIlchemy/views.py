@@ -2,8 +2,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect
 from .models import dbElementos
 from .models import dbCombinaciones
-from .testLlama import combinarAPI
-import datetime
+import replicate
 
 @csrf_protect
 def alquimia(request):
@@ -17,26 +16,40 @@ def alquimia(request):
         elementoId1 = request.POST.getlist('elementoId[]')[0]
         elementoId2 = request.POST.getlist('elementoId[]')[1]
 
-	# Ponemos el elemento 1 (Agua) como predeterminado si se intentó combinar con uno o ambos elementos vacíos
-        elementoId1 = elementoId1 if elementoId1 != '' else '1'
-        elementoId2 = elementoId2 if elementoId2 != '' else '1'
+	# Ponemos el elemento 164 (Water) como predeterminado si se intentó combinar con uno o ambos elementos vacíos
+        elementoId1 = elementoId1 if elementoId1 != '' else '164'
+        elementoId2 = elementoId2 if elementoId2 != '' else '164'
 
-	# Guardamos la combinación en la base de datos como un nuevo elemento
         elemento1 = dbElementos.objects.filter(id=elementoId1).first()
         elemento2 = dbElementos.objects.filter(id=elementoId2).first()
         nombre = f"{elemento1}{elemento2}"
-        nuevoElemento = dbElementos(nombre=nombre)
-        #nombre1 = elemento1.nombre
-        #nombre2 = elemento2.nombre
-        #nombre = combinarAPI(nombre1, nombre2)
-        nuevoElemento = dbElementos(nombre=nombre)
-        nuevoElemento.save()
 
-	# Guardamos los datos de la combinación en sí
-        #descripcion = "TBD"
-        #imagen = "TBD"
-        nuevaCombinacion = dbCombinaciones(elemento1=elemento1, elemento2=elemento2, resultado=nombre)
-        nuevaCombinacion.save()
+        # Input de la API
+        input_data = {
+            "top_p": 1,
+            "prompt": f"Tell me the result of combining {elemento1} and {elemento2}",
+            "temperature": 0.75,
+            "system_prompt": "You are an AI that combines elements as if we were playing the videogame Little Alchemy.You need to come up with the result of combining both an as output, write in a single word said result. Do not say anything else in the output. Just one single word.",
+            "max_new_tokens": 800,
+            "repetition_penalty": 1
+        }
+
+        # Output de la API
+        output = replicate.run("meta/llama-2-70b-chat", input=input_data)
+
+        # La API devuelve una lista de Python, así que hay que juntarlo todo
+        resultadoCombinacion = ''.join(output).strip() if output else None
+        #print(resultadoCombinacion) --> Debugging
+        if resultadoCombinacion:
+	    # Guardamos la combinación en la base de datos si se ha generado correctamente un resultado
+            nuevoElemento = dbElementos(nombre=resultadoCombinacion)
+            nuevoElemento.save()
+
+            #descripcion = "TBD"
+            #imagen = "TBD"
+            nuevaCombinacion = dbCombinaciones(elemento1=elemento1, elemento2=elemento2, resultado=resultadoCombinacion)
+            nuevaCombinacion.save()
+
     return render(request, 'alquimia.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento})
 
 def inicio(request):
