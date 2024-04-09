@@ -15,12 +15,6 @@ button{
     cursor: pointer;
 }
 
-button:hover{
-    background-color: #ffffff; 
-    transform: scale(1.1); 
-    box-shadow: 4px 8px 16px rgba(0, 0, 0, 0.2);
-}
-
 .contenedorAlquimia {
     margin: 0;
     padding: 0;
@@ -32,6 +26,19 @@ button:hover{
     padding: 0;
     margin: 0;
 }
+
+.bodyAlquimia button {
+    background-color: #3E2717;
+    background-color: #E8CDAF;
+    border: 2px solid #3E2717;
+}
+
+button:hover{
+    background-color: #ffffff; 
+    transform: scale(1.1); 
+    box-shadow: 4px 8px 16px rgba(0, 0, 0, 0.2);
+}
+
 .bodyInicio{
     background-image: url(imagenes/aiquimiaInicio.jpeg);
     background-repeat: no-repeat;
@@ -47,11 +54,16 @@ button:hover{
 .bodyInicio button{
     margin-top: 10px;
 }
+
+
 .izquierda {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: white;
+    background-image: url(imagenes/wood.jpg);
+    background-size: cover;
+    background-position: top;
+    /* background-color: white; */
     border: 3px solid black;
     flex: 1;
     flex-direction: column;
@@ -59,7 +71,10 @@ button:hover{
 
 .derecha {
     width: 375px;
-    background-color: #f8f8e7;
+/*    background-color: #f8f8e7; */
+    background-image: url(imagenes/paper.jpg);
+    background-size: cover;
+    background-position: top;
     border: 3px solid black;
     border-left-width: 0;
     overflow: scroll;
@@ -82,8 +97,8 @@ button:hover{
 .elemento {
     width: 100px;
     height: 100px;
-    background-color: lightblue;
-    border: 2px solid black;
+    background-color: #E8CDAF;
+    border: 2px solid #3E2717;
     margin: 5px; 
     line-height: 100px;
     text-align: center;
@@ -93,15 +108,20 @@ button:hover{
 }
 
 .vacio {
+    background: rgba(248, 197, 144, 0.7);
     width: 150px;
     height: 150px;
-    border: 2px dashed black;
+    border: 4px dashed #3E2719;
     margin: 10px;
     align-items:center;
 }
 
 .math{
-    font-size: 30px;
+    font-size: 70px;
+    font-weight: bold;
+    color: #D2B48C;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: #3E2719;
 }
 
 .elemento.arrastrando{
@@ -110,7 +130,7 @@ button:hover{
 
 .nav {
     height: 75px;
-    background: aliceblue;
+    background-color: #f8f8e7;
     display: flex;
     align-items: center;
     padding-left: 10px;
@@ -136,7 +156,7 @@ button:hover{
 .swal-button {
     padding: 15px 30px;
     border: 2px solid black;
-    background-color: lightblue;
+    background-color: #E8CDAF;
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
     color:black;
 }

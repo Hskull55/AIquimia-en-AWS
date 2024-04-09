@@ -8,7 +8,7 @@ import replicate
 def alquimia(request):
     # Obtenemos los elementos de la base de datos
     listaElementos = dbElementos.objects.all
-    # Inicializamos nuevoElemento sin valor para evitar errores al cargar la página
+    # Inicializamos nuevoElemento y error sin valor para evitar errores al cargar la página
     nuevoElemento = None
     error = None
 
@@ -52,7 +52,7 @@ def alquimia(request):
             nuevaCombinacion.save()
         # Este error se mostrará en un alert si la IA devuelve más de una palabra
         else:
-            error = "Ha ocurrido algo inesperado. Inténtalo otra vez"
+            error = "Something went wrong. Try again later"
 
     return render(request, 'alquimia.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error})
 

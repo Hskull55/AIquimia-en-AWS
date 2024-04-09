@@ -63,14 +63,14 @@ window.onload = function () {
     var nuevoElemento = document.getElementById('nuevoElemento').innerText;
 
     if (nuevoElemento !== "None") {
-	    swal("Has creado el elemento " + nuevoElemento, "TBD", {
-		button: "Sencillamente impresionante",
+	    swal("You have created " + nuevoElemento, "TBD", {
+		button: "That's rad.",
 	    });
     }
 
     var error = document.getElementById('error').innerText;
     if (error !== "None") {
-	    swal(error, "Sentimos las molestias", {
+	    swal(error, "Our most sincere apologies", {
 		button: "D'oh!",
 	    });
     }

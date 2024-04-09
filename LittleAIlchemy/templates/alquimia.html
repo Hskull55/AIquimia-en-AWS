@@ -23,14 +23,12 @@
                 <div class="vacio contenedor"></div>
                 <div class="math">+</div>
                 <div class="vacio contenedor"></div>
-                <div class="math">=</div>
-                <img src="{% static 'imagenes/interrogacion.png' %}" alt="?" class="vacio" draggable="false">
             </div>
 	    <!-- Formulario que envía los elementos a combinar -->
             <form id="formCombinar" action="" method="post">{% csrf_token %}
                 <input type="hidden" name="elementoId[]" id="hidden1">
                 <input type="hidden" name="elementoId[]" id="hidden2">
-                <button type="button" onclick="combinar()">Combinar</button>
+                <button type="button" onclick="combinar()">Combine</button>
             </form>
         </div>
         <!-- Zona que contiene los elementos del usuario -->
@@ -44,7 +42,7 @@
         </div>
     </div>
     <!-- Barra de navegación inferior -->
-    <div class="nav"><button class="inicio" onclick="window.location.href='/'">Volver</button></div>
+    <div class="nav"><button class="inicio" onclick="window.location.href='/'">Return</button></div>
     
 
     {% if error %}
