@@ -4,16 +4,41 @@
 const elementos = document.querySelectorAll('.elemento')
 const contenedores = document.querySelectorAll('.contenedor')
 
-// Control del arrastre de los elementos
+// Control de arrastre para los elementos
 elementos.forEach(elemento => {
     elemento.addEventListener('dragstart', () => {
-        elemento.classList.add('arrastrando')
-    })
+        elemento.classList.add('arrastrando');
+    });
 
     elemento.addEventListener('dragend', () => {
-        elemento.classList.remove('arrastrando')
-    })
-})
+        elemento.classList.remove('arrastrando');
+    });
+
+    // Este event listener es para mover automáticamente los elementos al hacer click sobre ellos
+    elemento.addEventListener('click', () => {
+        // Mira si el contenedor en el que está el elemento es el contenedor de elementos principal o uno de los "Vacíos"
+        const contenedorOrigen = elemento.parentElement;
+
+        // Si está en uno "vacío" lo mueve al principal
+        if (contenedorOrigen.classList.contains('vacio')) {
+            const contenedorElementos = document.querySelector('.contenedorElementos');
+            contenedorElementos.appendChild(elemento);
+        // Si no, busca los contenedores "vacíos"
+        } else {
+            const contenedoresVacios = document.querySelectorAll('.vacio.contenedor');
+
+            // Y comprueba si están vacíos o no
+            for (const contenedor of contenedoresVacios) {
+                // Si lo están, mete el elemento dentro
+                if (contenedor.querySelectorAll('.elemento').length === 0) { 
+                    contenedor.appendChild(elemento); 
+                    // Nos salimos del bucle una vez esté hecho para que no lo mueva al segundo contenedor vacío
+                    return;
+                }
+            }
+        }
+    });
+});
 
 contenedores.forEach(contenedor => {
     contenedor.addEventListener('dragover', e => {

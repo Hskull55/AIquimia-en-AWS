@@ -31,6 +31,8 @@ Estamos trabajando en ello...
 - [SweetAlert](https://sweetalert.js.org/)
     - [Installation guide](https://sweetalert.js.org/guides/)
 - [W3Schools - CSS](https://www.w3schools.com/cssref)
+- [W3Schools - JavaScript](https://www.w3schools.com/js)
+    - [JavaScript For Of](https://www.w3schools.com/js/js_loop_forof.asp)
 - [Youtube - THE PROTON GUY](https://www.youtube.com/@the_proton_guy)
     - [Insert Data to Database from HTML and CSS Form in Django | Django Database Form](https://www.youtube.com/watch?v=HaSPU6AdWeY)
 - [Youtube - UskoKruM2010](https://www.youtube.com/@UskoKruM2010)
