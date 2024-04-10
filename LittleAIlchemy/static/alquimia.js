@@ -86,9 +86,10 @@ function combinar() {
 // Alert para informar de la creación de un nuevo elemento / Error
 window.onload = function () {
     var nuevoElemento = document.getElementById('nuevoElemento').innerText;
+    var descripcion = document.getElementById('descripcion').innerText;
 
     if (nuevoElemento !== "None") {
-	    swal("You have created " + nuevoElemento, "TBD", {
+	    swal("You have created " + nuevoElemento, descripcion, {
 		button: "That's rad.",
 	    });
     }

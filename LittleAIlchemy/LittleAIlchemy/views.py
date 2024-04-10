@@ -40,21 +40,37 @@ def alquimia(request):
 
         # La API devuelve una lista de Python, así que hay que juntarlo todo
         resultadoCombinacion = ''.join(output).strip() if output else None
-        #print(resultadoCombinacion) --> Debugging
+
+        # -----------------------------------------------------------------------
+
+        # Input para la descripción del elemento resultante
+        input_data = {
+            "top_p": 1,
+            "prompt": f"Give me a brief description for {resultadoCombinacion}",
+            "system_prompt": "You are an AI that combines elements as if we were playing Little Alchemy. As input you will recieve a word, which is the result of combining two elements in that harmless game. I need you to come up with a description for said element. Just give me the description, no need to tell me anything else; so don't say Sure, Of course or anything like that, just start describing whatever was created. Do not mention the elements you think it came from",
+            "temperature": 0.75,
+            "max_new_tokens": 600,
+            "repetition_penalty": 1
+        }
+
+        # Output de la API. Usamos el modelo 7 porque si no tarda mucho
+        output = replicate.run("meta/llama-2-7b-chat", input=input_data)
+
+        # La API devuelve una lista de Python, así que hay que juntarlo todo
+        descripcion = ''.join(output).strip() if output else None
         if resultadoCombinacion and len(resultadoCombinacion.split()) == 1:
 	    # Guardamos la combinación en la base de datos si se ha generado correctamente un resultado
             nuevoElemento = dbElementos(nombre=resultadoCombinacion)
             nuevoElemento.save()
 
-            #descripcion = "TBD"
             #imagen = "TBD"
-            nuevaCombinacion = dbCombinaciones(elemento1=elemento1, elemento2=elemento2, resultado=resultadoCombinacion)
+            nuevaCombinacion = dbCombinaciones(elemento1=elemento1, elemento2=elemento2, resultado=resultadoCombinacion, descripcion=descripcion)
             nuevaCombinacion.save()
         # Este error se mostrará en un alert si la IA devuelve más de una palabra
         else:
             error = "Something went wrong. Try again later"
 
-    return render(request, 'alquimia.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error})
+    return render(request, 'alquimia.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion,})
 
 def inicio(request):
     return render(request, 'inicio.html')
