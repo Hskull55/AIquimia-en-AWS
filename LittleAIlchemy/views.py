@@ -31,13 +31,14 @@ def alquimia(request):
         # Si la combinación ya existe, sacamos la información de la base de datos
         if combinacionExistenteA:
             nuevoElemento = combinacionExistenteA.resultado
-            descripcion = dbElementos.objects.get(nombre=nuevoElemento).descripcion
+            descripcion = combinacionExistenteA.descripcion
         # Esto es por si están al revés
         elif combinacionExistenteB:
             nuevoElemento = combinacionExistenteB.resultado
-            descripcion = dbElementos.objects.get(nombre=nuevoElemento).descripcion
+            descripcion = combinacionExistenteB.descripcion
         # Si no está registrada la combinación, le pedimos a la IA que la genere
         else:
+            nombre = f"{elemento1}{elemento2}"
 
             # Input de la API
             input_data = {
@@ -75,17 +76,15 @@ def alquimia(request):
 
             # Guardamos la combinación en la base de datos si se ha generado correctamente un resultado
             if resultadoCombinacion and len(resultadoCombinacion.split()) == 1:
-                nuevoElemento = dbElementos(nombre=resultadoCombinacion, descripcion=descripcion)
+                nuevoElemento = dbElementos(nombre=resultadoCombinacion)
                 # Comprobamos si ya estaba registrado para que no se repita
                 existeElemento = dbElementos.objects.filter(nombre=resultadoCombinacion)
                 if not existeElemento:
                     nuevoElemento.save()
 
-                # Como "resultado" es una clave foránea que hace referencia a dbElementos.nombre, tenemos que hacer esto
-                resultadoCombinacion = dbElementos.objects.get(nombre=nuevoElemento)
+                # imagen = "TBD"
                 nuevaCombinacion = dbCombinaciones(elemento1=elemento1, elemento2=elemento2, resultado=resultadoCombinacion,)
                 nuevaCombinacion.save()
-
             # Este error se mostrará en un alert si la IA devuelve más de una palabra
             else:
                 error = "Something went wrong. Try again later"
