@@ -15,6 +15,8 @@ Estamos trabajando en ello...
 - [JavaScript Tutorial](https://www.javascripttutorial.net)
     - [JavaScript Anonymous Functions](https://www.javascripttutorial.net/javascript-anonymous-functions/)
 - [JSDELIVR](https://www.jsdelivr.com/)
+- [PythonTUTORIAL](https://www.pythontutorial.net/)
+    - [Django ORM](https://www.pythontutorial.net/django-tutorial/django-orm/)
 - [Real Python](https://realpython.com/)
     - [Python's F-String for String Interpolation and Formatting](https://realpython.com/python-f-strings/)
 - [Reddit - Django](https://www.reddit.com/r/django/)

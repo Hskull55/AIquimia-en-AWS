@@ -63,7 +63,7 @@ def alquimia(request):
             input_data = {
                 "top_p": 1,
                 "prompt": f"Give me a brief description for {resultadoCombinacion}",
-                "system_prompt": "You are an AI that combines elements as if we were playing Little Alchemy. As input you will recieve a word, which is the result of combining two elements in that harmless game. I need you to come up with a description for said element. Just give me the description, no need to tell me anything else; so don't say Sure, Of course or anything like that, just start describing whatever was created. Do not mention the elements you think it came from",
+                "system_prompt": "You are an AI specializing in generating descriptions for elements created by combining two inputs in a manner akin to the game Little Alchemy. Your task is to provide a detailed description of the resulting element without referencing its constituent parts. Simply begin describing the newly formed element without preamble. Don't start by saying 'Sure, heres the description' or anything like that and avoid giving your opinion on the result or simulating noises like *Ahhh*",
                 "temperature": 0.75,
                 "max_new_tokens": 600,
                 "repetition_penalty": 1
@@ -78,7 +78,10 @@ def alquimia(request):
             # Guardamos la combinación en la base de datos si se ha generado correctamente un resultado
             if resultadoCombinacion and len(resultadoCombinacion.split()) == 1:
                 nuevoElemento = dbElementos(nombre=resultadoCombinacion)
-                nuevoElemento.save()
+                # Comprobamos si ya estaba registrado para que no se repita
+                existeElemento = dbElementos.objects.filter(nombre=resultadoCombinacion)
+                if not existeElemento:
+                    nuevoElemento.save()
 
                 # imagen = "TBD"
                 nuevaCombinacion = dbCombinaciones(elemento1=elemento1, elemento2=elemento2, resultado=resultadoCombinacion, descripcion=descripcion)
