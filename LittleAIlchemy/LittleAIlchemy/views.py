@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect
-from .models import dbElementos, dbCombinaciones  # Importamos los modelos actualizados
+from .models import dbElementos, dbCombinaciones
 import replicate
 
 @csrf_protect
@@ -61,7 +61,7 @@ def alquimia(request):
             input_data = {
                 "top_p": 1,
                 "prompt": f"Give me a brief description for {resultadoCombinacion}",
-                "system_prompt": "You are an AI specializing in generating descriptions for elements created by combining two inputs in a manner akin to the game Little Alchemy. Your task is to provide a detailed description of the resulting element without referencing its constituent parts. Simply begin describing the newly formed element without preamble. Don't start by saying 'Sure, heres the description' or anything like that and avoid giving your opinion on the result or simulating noises like *Ahhh*",
+                "system_prompt": "You are an AI that combines elements as if we were playing Little Alchemy. As input you will recieve a word, which is the result of combining two elements in that harmless game. I need you to come up with a description for said element. Just give me the description, no need to tell me anything else; so don't say Sure, Of course or anything like that, just start describing whatever was created. Do not mention the elements you think it came from. Don't start by saying 'Sure, heres the description' or anything like that and avoid giving your opinion on the result or simulating noises like *Ahhh*",
                 "temperature": 0.75,
                 "max_new_tokens": 600,
                 "repetition_penalty": 1
@@ -72,6 +72,25 @@ def alquimia(request):
 
             # La API devuelve una lista de Python, así que hay que juntarlo todo
             descripcion = ''.join(output).strip() if output else None
+
+            # -----------------------------------------------------------------------
+
+            # Input para la imagen
+            input_data = {
+                "top_p": 1,
+                "prompt": f"Given the element {resultadoCombinacion}, tell me which of these file names sounds more appropiate: Fire.png, Water.png, Rock.png, Air.png",
+                "system_prompt":"You are an ai that chooses the most suitable file name for a given word. If there isn't a direct match, you need to choose the file name that's more closely associated with the word given as input. Answer with just the name of the file. Don't write anything else. The output must be just the name of the file",
+                "temperature": 0.75,
+                "max_new_tokens": 100,
+                "repetition_penalty": 1
+            }
+
+            # Output de la API. Usamos el 70 porque el 7 es medio tonto
+            output = replicate.run("meta/llama-2-70b-chat", input=input_data)
+
+            # La API devuelve una lista de Python, así que hay que juntarlo todo
+            imagen = ''.join(output).strip() if output else None
+            print(imagen)
 
             # Guardamos la combinación en la base de datos si se ha generado correctamente un resultado
             if resultadoCombinacion and len(resultadoCombinacion.split()) == 1:
