@@ -5,7 +5,8 @@ class dbElementos(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=255)
     descripcion = models.TextField(blank=True)
-    imagen = models.ImageField(upload_to='static/imagenes/elementos/', blank=True)
+    imagen = models.CharField(max_length=500)
+    upload = models.ImageField(upload_to='static/imagenes/elementos/', blank=True)
 
     class Meta:
         app_label = 'LittleAIlchemy'

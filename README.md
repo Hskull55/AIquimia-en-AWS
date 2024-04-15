@@ -36,6 +36,8 @@ Estamos trabajando en ello...
 - [W3Schools - CSS](https://www.w3schools.com/cssref)
 - [W3Schools - JavaScript](https://www.w3schools.com/js)
     - [JavaScript For Of](https://www.w3schools.com/js/js_loop_forof.asp)
+- [Youtube - Hedy Graphics](https://www.youtube.com/@HedyGraphics)
+    - [FREE EMOJIS PNG I FREE DOWNLOAD](https://drive.google.com/file/d/1YlIecqrCKFh3rCrJi8RXFKXeHGOh1QLE/view)
 - [Youtube - THE PROTON GUY](https://www.youtube.com/@the_proton_guy)
     - [Insert Data to Database from HTML and CSS Form in Django | Django Database Form](https://www.youtube.com/watch?v=HaSPU6AdWeY)
 - [Youtube - UskoKruM2010](https://www.youtube.com/@UskoKruM2010)

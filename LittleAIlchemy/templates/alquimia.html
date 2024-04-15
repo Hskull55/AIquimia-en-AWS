@@ -37,9 +37,8 @@
             <div class="contenedorElementos contenedor">
                 <!-- Bucle que muestra todos los elementos de la base de datos -->
 		{% for elemento in listaElementos %}
-                <div id="{{ elemento.id }}" class="elemento" draggable="true">{{ elemento.nombre }}</div>
-                {% endfor %}
-            </div>
+                <div id="{{ elemento.id }}" class="elemento" style="background-image: url(../static/imagenes/elementos/{{elemento.imagen}})" draggable="true">{{ elemento.nombre }}</div>
+                {% endfor %}            </div>
         </div>
     </div>
     <!-- Barra de navegación inferior -->

@@ -7,10 +7,11 @@ import replicate
 def alquimia(request):
     # Obtenemos los elementos de la base de datos
     listaElementos = dbElementos.objects.all()
-    # Inicializamos nuevoElemento, error y descripcion sin valor para evitar errores al cargar la página
+    # Inicializamos varias varibales sin valor para evitar errores al cargar la página
     nuevoElemento = None
     error = None
     descripcion = None
+    imagen = None
 
     if request.method == 'POST':
         # Asignamos los ids de los elementos a una variable
@@ -61,7 +62,8 @@ def alquimia(request):
             input_data = {
                 "top_p": 1,
                 "prompt": f"Give me a brief description for {resultadoCombinacion}",
-                "system_prompt": "You are an AI that combines elements as if we were playing Little Alchemy. As input you will recieve a word, which is the result of combining two elements in that harmless game. I need you to come up with a description for said element. Just give me the description, no need to tell me anything else; so don't say Sure, Of course or anything like that, just start describing whatever was created. Do not mention the elements you think it came from. Don't start by saying 'Sure, heres the description' or anything like that and avoid giving your opinion on the result or simulating noises like *Ahhh*",
+                "system_prompt": "You are an AI that describes words. You will receive an input and you need to describe it. The output must be just the description of said word, so don't say anything like 'Here's the description for X' just start writing the description itself.",
+#                "system_prompt": "You are an AI that combines elements as if we were playing Little Alchemy. As input you will recieve a word. I need you to come up with a description for said word. Just give me the description, no need to tell me anything else; so don't say Sure, Of course or anything like that, just start describing whatever was created. Do not mention the elements you think it came from. Don't start by saying 'Sure, heres the description for (WORD)' or anything like that and try to give a serious, easy to undertand description. If for whatever reason you can't create a serious, objective description or the input is a word that doesn't exist, then simply try to come up with a description that seems logical given the context of the game",
                 "temperature": 0.75,
                 "max_new_tokens": 600,
                 "repetition_penalty": 1
@@ -78,8 +80,8 @@ def alquimia(request):
             # Input para la imagen
             input_data = {
                 "top_p": 1,
-                "prompt": f"Given the element {resultadoCombinacion}, tell me which of these file names sounds more appropiate: Fire.png, Water.png, Rock.png, Air.png",
-                "system_prompt":"You are an ai that chooses the most suitable file name for a given word. If there isn't a direct match, you need to choose the file name that's more closely associated with the word given as input. Answer with just the name of the file. Don't write anything else. The output must be just the name of the file",
+                "prompt": f"Given the element {resultadoCombinacion}, tell me which of these file names sounds more appropiate: Fire.png, Water.png, Earth.png, Air.png",
+                "system_prompt":"You are an ai that chooses the most suitable file name for a given word. If there isn't a direct match, you need to choose the file name that's more closely associated with the word given as input. Answer with just the name of the file. Don't write anything else. The output must be just the name of the file. It must be one of the file names given as input, don't make up any file names",
                 "temperature": 0.75,
                 "max_new_tokens": 100,
                 "repetition_penalty": 1
@@ -94,7 +96,7 @@ def alquimia(request):
 
             # Guardamos la combinación en la base de datos si se ha generado correctamente un resultado
             if resultadoCombinacion and len(resultadoCombinacion.split()) == 1:
-                nuevoElemento = dbElementos(nombre=resultadoCombinacion, descripcion=descripcion)
+                nuevoElemento = dbElementos(nombre=resultadoCombinacion, descripcion=descripcion, imagen=imagen)
                 # Comprobamos si ya estaba registrado para que no se repita
                 existeElemento = dbElementos.objects.filter(nombre=resultadoCombinacion)
                 if not existeElemento:
@@ -109,7 +111,7 @@ def alquimia(request):
             else:
                 error = "Something went wrong. Try again later"
 
-    return render(request, 'alquimia.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion})
+    return render(request, 'alquimia.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen})
 
 def inicio(request):
     return render(request, 'inicio.html')

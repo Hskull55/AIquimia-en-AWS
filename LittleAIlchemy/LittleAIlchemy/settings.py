@@ -54,6 +54,10 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'LittleAIlchemy.urls'
 
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'static')
+
+#MEDIA_URL = '/static/'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
