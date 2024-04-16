@@ -81,8 +81,9 @@ def alquimia(request):
             # Input para la imagen
             input_data = {
                 "top_p": 1,
-                "prompt": f"Given the element {resultadoCombinacion}, tell me which of these file names sounds more appropiate (Make sure it's one of the file names in this list): (Fire.png, Water.png, Earth.png, Air.png, Explosion.png, Heart.png, Shiny.png, Evil.png, Skull.png, Hand.png, Dance.png, Clothes.png, Crown.png, Eyes.png, Tree.png, Flower.png, Snow.png, Lightning.png, Cloud.png, Internet.png, Moon.png, Sun.png)",
-                "system_prompt":"You are an ai that chooses the most suitable file name for a given word. If there isn't a direct match, you need to choose the file name that's more closely associated with the word given as input. Answer with just the name of the file. Don't write anything else. The output must be just the name of the file. It must be one of the file names given as input. The output will never be a file name that is not on the provided list",
+                "prompt": f"Given the element {resultadoCombinacion}, tell me which of these file names sounds more closely related to it: (Fire.png, Water.png, Earth.png, Air.png, Explosion.png, Heart.png, Shiny.png, Evil.png, Skull.png, Hand.png, Dance.png, Clothes.png, Crown.png, Eyes.png, Tree.png, Flower.png, Snow.png, Lightning.png, Cloud.png, Internet.png, Moon.png, Sun.png)",
+                "system_prompt":"You choose a file name from a list. Always output your answer with just the file name. No pre-amble. Only choose from the given list. If not present on the list, choose the closest one but don't create a new one that is not on the list",
+#                "system_prompt":"You are an ai that chooses the most suitable file name for a given word. If there isn't a direct match, you need to choose the file name that's more closely associated with the word given as input. Answer with just the name of the file. Don't write anything else. The output must be just the name of the file. It must be one of the file names given as input. The output will never be a file name that is not on the provided list",
                 "temperature": 0.75,
                 "max_new_tokens": 60,
                 "repetition_penalty": 1
@@ -100,7 +101,7 @@ def alquimia(request):
                 if palabra.endswith(".png"):
                        imagen = palabra
                        break
-                elif palabra.startswith('"') and palabra.endswith('"') or palabra.endswith('.'):
+                elif palabra.startswith('"') and palabra.endswith('"'):
                     corte = palabra[1:-1]
                     if corte.endswith(".png"):
                          imagen = corte
@@ -110,6 +111,12 @@ def alquimia(request):
                     if corte.endswith(".png"):
                          imagen = corte
                          break
+                elif palabra.endswith('.'):
+                    corte = palabra[:-1]
+                    if corte.endswith(".png"):
+                         imagen = corte
+                         break
+
 
             print(imagen)
 
