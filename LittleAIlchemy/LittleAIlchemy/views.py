@@ -1,3 +1,4 @@
+import os
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect
 from .models import dbElementos, dbCombinaciones
@@ -80,10 +81,10 @@ def alquimia(request):
             # Input para la imagen
             input_data = {
                 "top_p": 1,
-                "prompt": f"Given the element {resultadoCombinacion}, tell me which of these file names sounds more appropiate: Fire.png, Water.png, Earth.png, Air.png",
-                "system_prompt":"You are an ai that chooses the most suitable file name for a given word. If there isn't a direct match, you need to choose the file name that's more closely associated with the word given as input. Answer with just the name of the file. Don't write anything else. The output must be just the name of the file. It must be one of the file names given as input, don't make up any file names",
+                "prompt": f"Given the element {resultadoCombinacion}, tell me which of these file names sounds more appropiate (Make sure it's one of the file names in this list): (Fire.png, Water.png, Earth.png, Air.png, Explosion.png, Heart.png, Shiny.png, Evil.png, Skull.png, Hand.png, Dance.png, Clothes.png, Crown.png, Eyes.png, Tree.png, Flower.png, Snow.png, Lightning.png, Cloud.png, Internet.png, Moon.png, Sun.png)",
+                "system_prompt":"You are an ai that chooses the most suitable file name for a given word. If there isn't a direct match, you need to choose the file name that's more closely associated with the word given as input. Answer with just the name of the file. Don't write anything else. The output must be just the name of the file. It must be one of the file names given as input. The output will never be a file name that is not on the provided list",
                 "temperature": 0.75,
-                "max_new_tokens": 100,
+                "max_new_tokens": 60,
                 "repetition_penalty": 1
             }
 
@@ -92,7 +93,30 @@ def alquimia(request):
 
             # La API devuelve una lista de Python, así que hay que juntarlo todo
             imagen = ''.join(output).strip() if output else None
+            palabras = imagen.split()
+            print(palabras)
+            # Control de errores por si la IA devuelve una cadena larga, o el nombre del fichero está entre comillas
+            for palabra in palabras:
+                if palabra.endswith(".png"):
+                       imagen = palabra
+                       break
+                elif palabra.startswith('"') and palabra.endswith('"') or palabra.endswith('.'):
+                    corte = palabra[1:-1]
+                    if corte.endswith(".png"):
+                         imagen = corte
+                         break
+                elif palabra.startswith('"') and palabra.endswith('.'):
+                    corte = palabra[1:-2]
+                    if corte.endswith(".png"):
+                         imagen = corte
+                         break
+
             print(imagen)
+
+            # Si la API devuleve algo raro / un nombre que no existe, le asignamos al elemento la imagen de uno de los dos a partir de los cuales se creó
+            rutaImagen = os.path.join("static/imagenes/elementos/", imagen)
+            if not os.path.exists(rutaImagen):
+                imagen = elemento1.imagen
 
             # Guardamos la combinación en la base de datos si se ha generado correctamente un resultado
             if resultadoCombinacion and len(resultadoCombinacion.split()) == 1:

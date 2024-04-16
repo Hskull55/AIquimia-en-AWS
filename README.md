@@ -25,6 +25,7 @@ Estamos trabajando en ello...
     - [Run a model from Python](https://replicate.com/docs/get-started/python)
     - [meta / llama-2-7b-chat ](https://replicate.com/meta/llama-2-7b-chat)
         - [Streaming](https://replicate.com/meta/llama-2-7b-chat/api/learn-more#streaming)
+    - [A guide to prompting Llama 2](https://replicate.com/blog/how-to-prompt-llama)
 - [Stack Overflow](https://stackoverflow.com/)
     - [What does "function anonymous" mean in Javascript?](https://stackoverflow.com/questions/9118869/what-does-function-anonymous-mean-in-javascript)
     - [How can I center text (horizontally and vertically) inside a div block?](https://stackoverflow.com/questions/5703552/how-can-i-center-text-horizontally-and-vertically-inside-a-div-block)
