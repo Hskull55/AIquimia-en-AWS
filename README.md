@@ -8,6 +8,8 @@ Estamos trabajando en ello...
     - [How To Use MySQL or MariaDB with your Django Application on Ubuntu 14.04](https://www.digitalocean.com/community/tutorials/how-to-use-mysql-or-mariadb-with-your-django-application-on-ubuntu-14-04)
 - [Documentación oficial de Django](https://docs.djangoproject.com/)
     - [Models](https://docs.djangoproject.com/en/5.0/topics/db/models/)
+- [Figma](figma.com)
+    - [Free Emoji Pack](https://www.figma.com/file/OdVPE3ESsulyRzomUlGeB6/Free-Emoji-Pack-(Community)?type=design&node-id=0-1&mode=design&t=hQgmA9QwF8tic0lb-0)
 - [GitHub](https://github.com/)
     - [Replicate Python client](https://github.com/replicate/replicate-python#readme)
 - [iStock](https://www.istockphoto.com/es)
