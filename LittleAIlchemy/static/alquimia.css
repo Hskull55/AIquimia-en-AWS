@@ -70,7 +70,6 @@ button:hover{
     background-image: url(imagenes/wood.jpg);
     background-size: cover;
     background-position: top;
-    /* background-color: white; */
     border: 3px solid black;
     flex: 1;
     flex-direction: column;
@@ -78,7 +77,6 @@ button:hover{
 
 .derecha {
     width: 375px;
-/*    background-color: #f8f8e7; */
     background-image: url(imagenes/paper.jpg);
     background-size: cover;
     background-position: top;
@@ -143,6 +141,11 @@ button:hover{
     padding-left: 10px;
     border-left: 3px solid black;
     border-right: 3px solid black;
+    justify-content: space-between;
+}
+
+.pLogin {
+    margin-right: 12px;
 }
 
 .swal-title {

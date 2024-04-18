@@ -27,13 +27,11 @@ elementos.forEach(elemento => {
         const elementoClonado = elemento.cloneNode(true);
         // Miramos en qué contenedor se encuentra actualmente el elemento
         const contenedorOrigen = elemento.parentElement;
-
-        // Si está en uno "vacío" lo mueve al principal (A efectos prácticos lo elimina)
         const contenedoresVacios = document.querySelectorAll('.vacio.contenedor');
 
-        // Y comprueba si están vacíos o no
+        // Recorremos los contenedores "vacíos"...
         for (const contenedor of contenedoresVacios) {
-            // Si lo están, mete el elemento dentro
+            // Si no tienen nada dentro, metemos el elemento dentro
             if (contenedor.querySelectorAll('.elemento').length === 0) {
                 contenedor.appendChild(elementoClonado);
                 // Nos salimos del bucle una vez esté hecho para que no lo mueva al segundo contenedor vacío

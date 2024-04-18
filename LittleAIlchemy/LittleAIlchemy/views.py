@@ -127,6 +127,8 @@ def alquimia(request):
 
             # Guardamos la combinación en la base de datos si se ha generado correctamente un resultado
             if resultadoCombinacion and len(resultadoCombinacion.split()) == 1:
+                # Si la IA devuelve el resultado entre comillas o con un punto, lo quitamos
+                resultadoCombinacion = resultadoCombinacion.strip('"').replace(".", "")
                 nuevoElemento = dbElementos(nombre=resultadoCombinacion, descripcion=descripcion, imagen=imagen)
                 # Comprobamos si ya estaba registrado para que no se repita
                 existeElemento = dbElementos.objects.filter(nombre=resultadoCombinacion)
