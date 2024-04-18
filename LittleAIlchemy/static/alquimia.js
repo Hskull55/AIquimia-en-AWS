@@ -1,60 +1,71 @@
+// JavaScript para el juego
 
-//JavaScript para el juego
-
-const elementos = document.querySelectorAll('.elemento')
-const contenedores = document.querySelectorAll('.contenedor')
+const elementos = document.querySelectorAll('.elemento');
+const contenedores = document.querySelectorAll('.contenedor');
 
 // Control de arrastre para los elementos
 elementos.forEach(elemento => {
-    elemento.addEventListener('dragstart', () => {
-        elemento.classList.add('arrastrando');
+    elemento.addEventListener('dragstart', (e) => {
+        // Lo que podremos arrastrar será una copia del div original
+        const elementoClonado = elemento.cloneNode(true);
+        elementoClonado.classList.add('arrastrando');
+        // Esto es para que se vea y esté centrado
+        document.body.appendChild(elementoClonado);
+        e.dataTransfer.setDragImage(elementoClonado, 50, 50);
     });
 
+    // Al dejar de arrastrar le quita al clon la clase "arrastrando" porque si no, conserva sus propiedades
     elemento.addEventListener('dragend', () => {
-        elemento.classList.remove('arrastrando');
+        const clon = document.querySelector('.arrastrando');
+        if (clon) {
+            clon.classList.remove('arrastrando');
+        }
     });
-
     // Este event listener es para mover automáticamente los elementos al hacer click sobre ellos
     elemento.addEventListener('click', () => {
-        // Mira si el contenedor en el que está el elemento es el contenedor de elementos principal o uno de los "Vacíos"
+        // Clonamos el elemento
+        const elementoClonado = elemento.cloneNode(true);
+        // Miramos en qué contenedor se encuentra actualmente el elemento
         const contenedorOrigen = elemento.parentElement;
 
-        // Si está en uno "vacío" lo mueve al principal
-        if (contenedorOrigen.classList.contains('vacio')) {
-            const contenedorElementos = document.querySelector('.contenedorElementos');
-            contenedorElementos.appendChild(elemento);
-        // Si no, busca los contenedores "vacíos"
-        } else {
-            const contenedoresVacios = document.querySelectorAll('.vacio.contenedor');
+        // Si está en uno "vacío" lo mueve al principal (A efectos prácticos lo elimina)
+        const contenedoresVacios = document.querySelectorAll('.vacio.contenedor');
 
-            // Y comprueba si están vacíos o no
-            for (const contenedor of contenedoresVacios) {
-                // Si lo están, mete el elemento dentro
-                if (contenedor.querySelectorAll('.elemento').length === 0) { 
-                    contenedor.appendChild(elemento); 
-                    // Nos salimos del bucle una vez esté hecho para que no lo mueva al segundo contenedor vacío
-                    return;
-                }
+        // Y comprueba si están vacíos o no
+        for (const contenedor of contenedoresVacios) {
+            // Si lo están, mete el elemento dentro
+            if (contenedor.querySelectorAll('.elemento').length === 0) {
+                contenedor.appendChild(elementoClonado);
+                // Nos salimos del bucle una vez esté hecho para que no lo mueva al segundo contenedor vacío
+                return;
             }
         }
     });
 });
 
 contenedores.forEach(contenedor => {
+    // Esto es para que se puedan añadir elementos arrastrando a los contenedores "vacíos"
     contenedor.addEventListener('dragover', e => {
-        e.preventDefault()
-        const elemento = document.querySelector('.arrastrando')
+        e.preventDefault();
+        const elemento = document.querySelector('.arrastrando');
         const elementosEnContenedor = contenedor.querySelectorAll('.elemento');
-
-        //Esto es para que se pueda arrastrar solo un elemento por casilla vacía
+        // Solo deja si el contenedor está vacío
         if (contenedor.classList.contains('vacio') && elementosEnContenedor.length === 0) {
             contenedor.appendChild(elemento);
-        } else if (!contenedor.classList.contains('vacio')) {
-            contenedor.appendChild(elemento);
-        }
 
-    })
-})
+        }
+    });
+
+    // Aquí añadimos un event listener que permite descartar los elementos colocados haciendo click
+    if (contenedor.classList.contains('vacio')) {
+        contenedor.addEventListener('click', (event) => {
+            const elementoSeleccionado = event.target;
+            if (elementoSeleccionado.classList.contains('elemento')) {
+                elementoSeleccionado.remove();
+            }
+        });
+    }
+});
 
 // Función que obtiene los ids y los nombres de los elementos para combinarlos
 function combinar() {
@@ -74,7 +85,6 @@ function combinar() {
             textos.push(elementoTexto);
         }
     });
-    // alert("Elemento 1: ID - " + ids[0] + ", Texto - " + textos[0] + "\nElemento 2: ID - " + ids[1] + ", Texto - " + textos[1]);
 
     // Si en el array ids hay más de 0 elementos, el value del hidden1 será el id del primer elemento. Lo mismo para el segundo.
     document.getElementById('hidden1').value = ids.length > 0 ? ids[0] : '';
@@ -89,15 +99,26 @@ window.onload = function () {
     var descripcion = document.getElementById('descripcion').innerText;
 
     if (nuevoElemento !== "None") {
-	    swal("You have created " + nuevoElemento, descripcion, {
-		button: "That's rad.",
-	    });
+        swal("You have created " + nuevoElemento, descripcion, {
+            button: "That's rad.",
+        });
     }
 
     var error = document.getElementById('error').innerText;
     if (error !== "None") {
-	    swal(error, "Our most sincere apologies", {
-		button: "D'oh!",
-	    });
+        swal(error, "Our most sincere apologies", {
+            button: "D'oh!",
+        });
     }
 };
+
+// Función que limpia la mesa de alquimia
+
+function despejar() {
+    var contenedoresVacios = document.querySelectorAll('.vacio');
+    contenedoresVacios.forEach(function(contenedor) {
+        while (contenedor.firstChild) {
+            contenedor.removeChild(contenedor.firstChild);
+        }
+    });
+}

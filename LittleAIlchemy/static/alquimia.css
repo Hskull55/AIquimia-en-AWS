@@ -13,6 +13,13 @@ button{
     font-weight: bold;
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
     cursor: pointer;
+    margin: 6px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+#limpiar {
+    background-color: #A73541;
 }
 
 .contenedorAlquimia {
@@ -91,7 +98,7 @@ button:hover{
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 100px;
+    margin-bottom: 25px;
 }
 
 .elemento {
