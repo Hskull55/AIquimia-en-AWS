@@ -6,15 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AIquimia</title>
     {% load static %}
-    <script src="{% static 'alquimia.js' %}" defer></script>
+    <script src="{% static '../alquimia.js' %}" defer></script>
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'imagenes/favicon.ico' %}">
     <link rel="stylesheet" href="{% static 'alquimia.css' %}">
 </head>
 
 <body class="bodyInicio">
-    <h1>Home</h1> 
-    <button onclick="window.location.href='alquimia'">Play AIquimia</button>
-    <button onclick="window.location.href='admin'">Administration console</button>
+    <header>
+        <h1>Home</h1>
+        <h2><span id="inicio1">Welcome</span><span id="inicio2"> to </span><span id="inicio3">AIquimia,</span><span id="inicio4"> {{ user.username }}</span></h2>  
+    </header>
+    <div id="botonesInicio">
+        <button onclick="window.location.href='alquimia'">Play AIquimia</button>
+        <button onclick="window.location.href='admin'">Administration console</button>
+    </div>
 </body>
 
 </html>

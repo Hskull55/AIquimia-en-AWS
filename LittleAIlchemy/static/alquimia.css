@@ -1,14 +1,44 @@
-h1{
+h1, h2{
     color: white;
     font-weight: bold;
     font-family: sans-serif;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+}
+
+#inicio1 {
+    -webkit-text-stroke-color: #E39005;
+}
+
+#inicio2 {    
+    -webkit-text-stroke-color: #DFCF3D;
+}
+
+#inicio3 {
+    -webkit-text-stroke-color: #0B897D;
+}
+
+#inicio4 {
+    -webkit-text-stroke-color: #3C4585;
+}
+
+#botonesInicio {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 25px;
+}
+
+header {
+    position: absolute;
+    top: 0;
+    text-align: center;
 }
 
 button{
     padding: 15px 30px;
     border: 2px solid black;
     border-radius: 5px;
-    background-color: lightblue;
+    background-color: #5C66AA;
     font-size: 20px;
     font-weight: bold;
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
@@ -56,6 +86,8 @@ button:hover{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    height: 100vh;
+    position: relative;
 }
 
 .bodyInicio button{

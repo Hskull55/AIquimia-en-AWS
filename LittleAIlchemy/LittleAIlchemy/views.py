@@ -1,5 +1,7 @@
 import os
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView
 from django.views.decorators.csrf import csrf_protect
 from .models import dbElementos, dbCombinaciones
 import replicate
@@ -81,7 +83,7 @@ def alquimia(request):
             # Input para la imagen
             input_data = {
                 "top_p": 1,
-                "prompt": f"Given the element {resultadoCombinacion}, tell me which of these file names sounds more closely related to it: (Fire.png, Water.png, Earth.png, Air.png, Explosion.png, Heart.png, Shiny.png, Evil.png, Skull.png, Hand.png, Dance.png, Clothes.png, Crown.png, Eyes.png, Tree.png, Flower.png, Snow.png, Lightning.png, Cloud.png, Internet.png, Moon.png, Sun.png, Soup.png, Dragon.png, Volcano.png, Rain.png, Rainbow.png, Weapon.png, Music.png, Wood.png, Game.png, Toxin.png, Blood.png, Person.png, Magic.png, Sport.png, Mountain.png, Sound.png)",
+                "prompt": f"Given the element {resultadoCombinacion}, tell me which of these file names sounds more closely related to it: (Fire.png, Water.png, Earth.png, Air.png, Explosion.png, Heart.png, Shiny.png, Evil.png, Skull.png, Hand.png, Dance.png, Clothes.png, Crown.png, Eyes.png, Tree.png, Flower.png, Snow.png, Lightning.png, Cloud.png, Internet.png, Moon.png, Sun.png, Soup.png, Dragon.png, Volcano.png, Rain.png, Rainbow.png, Weapon.png, Music.png, Wood.png, Game.png, Toxin.png, Blood.png, Person.png, Magic.png, Sport.png, Mountain.png, Sound.png, Wave.png, Biohazard.png, Building.png, Virus.png, Desert.png)",
                 "system_prompt":"You choose a file name from a list. Always output your answer with just the file name. No pre-amble. Only choose from the given list. If not present on the list, choose the closest one but don't create a new one that is not on the list",
 #                "system_prompt":"You are an ai that chooses the most suitable file name for a given word. If there isn't a direct match, you need to choose the file name that's more closely associated with the word given as input. Answer with just the name of the file. Don't write anything else. The output must be just the name of the file. It must be one of the file names given as input. The output will never be a file name that is not on the provided list",
                 "temperature": 0.75,
@@ -146,5 +148,14 @@ def alquimia(request):
 
     return render(request, 'alquimia.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen})
 
+# Renderizamos la página de inicio
 def inicio(request):
     return render(request, 'inicio.html')
+
+# Utilizando la estructura generalmente conocida de "MyLoginView" implantamos el sistema de autenticación de usarios
+class MiLoginView(LoginView):
+    # El login se hará mediante la plantilla "login.html"
+    template_name = 'login.html'
+    # Si el login tiene éxito, nos redirigirá a la raíz del proyecto (Página de inicio)
+    def get_success_url(self):
+        return '/'

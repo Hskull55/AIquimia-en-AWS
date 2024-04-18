@@ -45,7 +45,7 @@
     <!-- Barra de navegación inferior -->
     <div class="nav">
         <button class="inicio" onclick="window.location.href='/'">Return</button>
-        <p class="pLogin"><img src="{% static 'imagenes/elementos/Person.png' %}" width="16px" height="16px"> You are currently logged in as TBD</p>
+        <p class="pLogin"><img src="{% static 'imagenes/elementos/Person.png' %}" width="16px" height="16px"> You are currently logged in as {{ user.username }}</p>
     </div>
     
 
