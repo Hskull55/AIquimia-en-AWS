@@ -39,6 +39,8 @@ Estamos trabajando en ello...
     - [¿Que función tiene el "(e)" en los códigos Js?](https://es.stackoverflow.com/questions/94140/que-funci%c3%b3n-tiene-el-e-en-los-c%c3%b3digos-js)
 - [SweetAlert](https://sweetalert.js.org/)
     - [Installation guide](https://sweetalert.js.org/guides/)
+- [TECHSTACKER](https://techstacker.com/)
+    - [How to put elements at the bottom of its container with CSS](https://techstacker.com/put-elements-bottom-container-css/#:~:text=To%20put%20an%20element%20at%20the%20bottom%20of,2%20position%3A%20absolute%3B%20%28child%29%203%20bottom%3A%200%3B%20%28child%29)
 - [W3Schools - CSS](https://www.w3schools.com/cssref)
 - [W3Schools - JavaScript](https://www.w3schools.com/js)
     - [JavaScript For Of](https://www.w3schools.com/js/js_loop_forof.asp)

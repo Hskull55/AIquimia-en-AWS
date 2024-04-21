@@ -1,7 +1,7 @@
 // JavaScript para el juego
 
 const elementos = document.querySelectorAll('.elemento');
-const contenedores = document.querySelectorAll('.contenedor');
+const contenedores = document.querySelectorAll('.vacio');
 
 // Control de arrastre para los elementos
 elementos.forEach(elemento => {
@@ -9,6 +9,7 @@ elementos.forEach(elemento => {
         // Lo que podremos arrastrar será una copia del div original
         const elementoClonado = elemento.cloneNode(true);
         elementoClonado.classList.add('arrastrando');
+        elementoClonado.classList.add('clon');
         // Esto es para que se vea y esté centrado
         document.body.appendChild(elementoClonado);
         e.dataTransfer.setDragImage(elementoClonado, 50, 50);
@@ -19,6 +20,18 @@ elementos.forEach(elemento => {
         const clon = document.querySelector('.arrastrando');
         if (clon) {
             clon.classList.remove('arrastrando');
+const contenedores = document.querySelectorAll('.vacio');
+        let soltadoEnContenedor = false;
+
+        contenedores.forEach((contenedor) => {
+            if (contenedor.contains(clon)) {
+                soltadoEnContenedor = true;
+            }
+        });
+
+        if (!soltadoEnContenedor) {
+            clon.remove();
+        }
         }
     });
     // Este event listener es para mover automáticamente los elementos al hacer click sobre ellos
@@ -50,7 +63,6 @@ contenedores.forEach(contenedor => {
         // Solo deja si el contenedor está vacío
         if (contenedor.classList.contains('vacio') && elementosEnContenedor.length === 0) {
             contenedor.appendChild(elemento);
-
         }
     });
 
