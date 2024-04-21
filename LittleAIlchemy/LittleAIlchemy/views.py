@@ -152,7 +152,7 @@ def alquimia(request):
 def inicio(request):
     return render(request, 'inicio.html')
 
-# Utilizando la estructura generalmente conocida de "MyLoginView" implantamos el sistema de autenticación de usarios
+# Utilizando el formulario predeterminado de Django para inicio de sesión "LoginView", implantamos el sistema de autenticación de usarios
 class MiLoginView(LoginView):
     # El login se hará mediante la plantilla "login.html"
     template_name = 'login.html'

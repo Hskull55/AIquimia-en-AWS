@@ -6,13 +6,27 @@ const contenedores = document.querySelectorAll('.vacio');
 // Control de arrastre para los elementos
 elementos.forEach(elemento => {
     elemento.addEventListener('dragstart', (e) => {
-        // Lo que podremos arrastrar será una copia del div original
+        // Creamos un div temporal fuera de la vista del usuario
+        // (Necesitaba hacer esto para arreglar un bug. Sé que es cutre, pero funciona)
+        const contenedorTemp = document.createElement('div');
+        contenedorTemp.style.position = 'absolute';
+        contenedorTemp.style.left = '-9999px';
+
+        // Clonamos el elemento y lo metemos en el div temporal
         const elementoClonado = elemento.cloneNode(true);
         elementoClonado.classList.add('arrastrando');
         elementoClonado.classList.add('clon');
-        // Esto es para que se vea y esté centrado
-        document.body.appendChild(elementoClonado);
+        contenedorTemp.appendChild(elementoClonado);
+
+        document.body.appendChild(contenedorTemp);
+
+        // Centramos la imagen para que el cursor salga en medio
         e.dataTransfer.setDragImage(elementoClonado, 50, 50);
+
+        // Eliminamos el contenedor temporal al dejar de arrastrar porque aunque no se vea, al inspeccionar elementos me salen si no 347248327549 divs vacíos
+        elemento.addEventListener('dragend', () => {
+            contenedorTemp.remove();
+        });
     });
 
     // Al dejar de arrastrar le quita al clon la clase "arrastrando" porque si no, conserva sus propiedades
@@ -20,18 +34,20 @@ elementos.forEach(elemento => {
         const clon = document.querySelector('.arrastrando');
         if (clon) {
             clon.classList.remove('arrastrando');
-const contenedores = document.querySelectorAll('.vacio');
-        let soltadoEnContenedor = false;
+            const contenedores = document.querySelectorAll('.vacio');
+            let soltadoEnContenedor = false;
 
-        contenedores.forEach((contenedor) => {
-            if (contenedor.contains(clon)) {
-                soltadoEnContenedor = true;
+            // Miramos a ver si e ha soltado el elemento en algún contenedor
+            contenedores.forEach((contenedor) => {
+                if (contenedor.contains(clon)) {
+                    soltadoEnContenedor = true;
+                }
+            });
+
+            // Si no es el caso, eliminamos el clon porque si no, se añade por debajo del body
+            if (!soltadoEnContenedor) {
+                clon.remove();
             }
-        });
-
-        if (!soltadoEnContenedor) {
-            clon.remove();
-        }
         }
     });
     // Este event listener es para mover automáticamente los elementos al hacer click sobre ellos
