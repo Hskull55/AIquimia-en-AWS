@@ -21,6 +21,7 @@ from .views import inicio, MiLoginView
 
 urlpatterns = [
     path('login/', MiLoginView.as_view(), name='login'),
+    path('signup/', views.registro, name='registro'),
     path('', login_required(inicio), name='inicio'),
     path('alquimia/', views.alquimia, name='alquimia'),
     path('admin/', admin.site.urls),

@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Sign up</title>
     {% load static %} <!-- Cargar archivos estáticos -->
     <link rel="stylesheet" href="{% static 'alquimia.css' %}"> <!-- CSS -->
 </head>
 <body>
-    <h1>Login</h1>
+    <h1>Sign up</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Log in</button>
+        <button type="submit">Sign up</button>
     </form>
-    <p>Don't have an account? <a href="/signup/">Sign up</a> now!</p>
 </body>
 </html>

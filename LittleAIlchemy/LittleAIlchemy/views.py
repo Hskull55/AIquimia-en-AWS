@@ -4,8 +4,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.views.decorators.csrf import csrf_protect
 from .models import dbElementos, dbCombinaciones
+from .forms import FormRegistro
 import replicate
 
+@login_required
 @csrf_protect
 def alquimia(request):
     # Obtenemos los elementos de la base de datos
@@ -149,6 +151,7 @@ def alquimia(request):
     return render(request, 'alquimia.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen})
 
 # Renderizamos la página de inicio
+@login_required
 def inicio(request):
     return render(request, 'inicio.html')
 
@@ -159,3 +162,16 @@ class MiLoginView(LoginView):
     # Si el login tiene éxito, nos redirigirá a la raíz del proyecto (Página de inicio)
     def get_success_url(self):
         return '/'
+
+# Página de registro
+def registro(request):
+    # Esto es `para cuando envías el formulario de registro, validarlo y llevarte a login
+    if request.method == 'POST':
+        formulario = FormRegistro(request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect('/login/')
+    else:
+    # Y esto para que cuando entres normalmente, te aparezca el formulario y ya
+        formulario = FormRegistro()
+    return render(request, 'registro.html', {'form': formulario})

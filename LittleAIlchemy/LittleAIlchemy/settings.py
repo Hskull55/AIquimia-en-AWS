@@ -114,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'es-es'
+LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Europe/Madrid'
 
@@ -137,3 +137,8 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Página de login
+
+LOGIN_URL = '/login/'
+

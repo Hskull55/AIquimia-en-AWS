@@ -4,11 +4,14 @@ Estamos trabajando en ello...
 ## Páginas y recuros consultados para la realización de este proyecto:
 
 - [ChatGPT](https://chat.openai.com/)
+- [CODEDEC](https://codedec.com/)
+    - [How to create login and registration in Django](https://codedec.com/tutorials/how-to-create-login-and-registration-in-django/)
 - [DigitalOcean](https://www.digitalocean.com/)
     - [How To Use MySQL or MariaDB with your Django Application on Ubuntu 14.04](https://www.digitalocean.com/community/tutorials/how-to-use-mysql-or-mariadb-with-your-django-application-on-ubuntu-14-04)
 - [Documentación oficial de Django](https://docs.djangoproject.com/)
     - [Models](https://docs.djangoproject.com/en/5.0/topics/db/models/)
     - [Using the Django authentication system](https://docs.djangoproject.com/en/5.0/topics/auth/default/)
+    - [Settings](https://docs.djangoproject.com/en/dev/ref/settings/)
 - [Figma](figma.com)
     - [Free Emoji Pack](https://www.figma.com/file/OdVPE3ESsulyRzomUlGeB6/Free-Emoji-Pack-(Community)?type=design&node-id=0-1&mode=design&t=hQgmA9QwF8tic0lb-0)
 - [GitHub](https://github.com/)
@@ -37,6 +40,7 @@ Estamos trabajando en ello...
     - [CSRF Token missing or incorrect](https://stackoverflow.com/a/61673665/23500316)
     - [Python pip install mysqlclient](https://stackoverflow.com/questions/57509537/python-pip-install-mysqlclient)
     - [¿Que función tiene el "(e)" en los códigos Js?](https://es.stackoverflow.com/questions/94140/que-funci%c3%b3n-tiene-el-e-en-los-c%c3%b3digos-js)
+    - [How to specify the login_required redirect url in django?](https://stackoverflow.com/questions/3578882/how-to-specify-the-login-required-redirect-url-in-django)
 - [SweetAlert](https://sweetalert.js.org/)
     - [Installation guide](https://sweetalert.js.org/guides/)
 - [TECHSTACKER](https://techstacker.com/)
