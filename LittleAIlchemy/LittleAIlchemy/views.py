@@ -1,7 +1,8 @@
 import os
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from .models import dbElementos, dbCombinaciones
 from .forms import FormRegistro
@@ -175,3 +176,9 @@ def registro(request):
     # Y esto para que cuando entres normalmente, te aparezca el formulario y ya
         formulario = FormRegistro()
     return render(request, 'registro.html', {'form': formulario})
+
+
+# Vista para cerrar sesión
+def vistaLogout(request):
+    logout(request)
+    return redirect('/login/')

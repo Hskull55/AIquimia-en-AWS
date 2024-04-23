@@ -44,7 +44,14 @@
     </div>
     <!-- Barra de navegación inferior -->
     <div class="nav">
-        <button class="inicio" onclick="window.location.href='/'">Return</button>
+        <div id="botones">
+            <!-- Si no ponía un formulario para enviarlo mediante POST, me daba un error al cerrar sesión-->
+            <form action="/logout/" method="post">
+                <button class="inicio" onclick="window.location.href='/'">Return</button>
+                {% csrf_token %}
+                <button type="submit">Log out</button>
+            </form>
+        </div>
         <p class="pLogin"><img src="{% static 'imagenes/elementos/Person.png' %}" width="16px" height="16px"> You are currently logged in as {{ user.username }}</p>
     </div>
     

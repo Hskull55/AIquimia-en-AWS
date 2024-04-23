@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>AIquimia login</title>
     {% load static %} <!-- Cargar archivos estáticos -->
     <link rel="stylesheet" href="{% static 'alquimia.css' %}"> <!-- CSS -->
 </head>
-<body>
-    <h1>Login</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Log in</button>
-    </form>
-    <p>Don't have an account? <a href="/signup/">Sign up</a> now!</p>
+<body class="bodyAuth">
+    <div class="formAuth">
+        <h1>AIquimia</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Log in</button>
+        </form>
+        <p>Don't have an account? <a href="/signup/">Sign up</a> now!</p>
+    </div>
 </body>
 </html>

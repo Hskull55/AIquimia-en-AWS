@@ -59,7 +59,7 @@ button{
     height: calc(100vh - 75px);
 }
 
-.bodyAlquimia{
+.bodyAlquimia {
     padding: 0;
     margin: 0;
 }
@@ -70,13 +70,41 @@ button{
     border: 2px solid #3E2717;
 }
 
-button:hover{
+.bodyAuth {
+    background-image: url(imagenes/estrellas.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.formAuth {
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 5px solid white;
+    padding: 20px;
+    color: white;
+    margin-top: 150px;
+    padding-top: 0px;
+    border-radius: 10px;
+}
+
+.formAuth button {
+    background-color:white;
+}
+
+.formAuth a {
+    color: yellow;
+}
+
+button:hover {
     background-color: #ffffff; 
     transform: scale(1.1); 
     box-shadow: 4px 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.bodyInicio{
+.bodyInicio {
     background-image: url(imagenes/aiquimiaInicio.jpeg);
     background-repeat: no-repeat;
     background-position: top;
@@ -90,7 +118,7 @@ button:hover{
     position: relative;
 }
 
-.bodyInicio button{
+.bodyInicio button {
     margin-top: 10px;
 }
 
