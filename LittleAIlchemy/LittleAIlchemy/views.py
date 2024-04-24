@@ -23,7 +23,6 @@ def alquimia(request):
     error = None
     descripcion = None
     imagen = None
-
     if request.method == 'POST':
         # Asignamos los ids de los elementos a una variable
         elementoId1 = request.POST.getlist('elementoId[]')[0]
@@ -39,15 +38,20 @@ def alquimia(request):
         # Verificamos si la combinación ya existe en la base de datos
         combinacionExistenteA = dbCombinaciones.objects.filter(elemento1=elemento1, elemento2=elemento2).first()
         combinacionExistenteB = dbCombinaciones.objects.filter(elemento1=elemento2, elemento2=elemento1).first()
-
         # Si la combinación ya existe, sacamos la información de la base de datos
         if combinacionExistenteA:
             nuevoElemento = combinacionExistenteA.resultado
             descripcion = dbElementos.objects.get(nombre=nuevoElemento).descripcion
+            # Añadimos al usuario como creador para que le aparezca el elemento
+            añadir = combinacionExistenteA.resultado
+            añadir.creadores.add(request.user)
         # Esto es por si están al revés
         elif combinacionExistenteB:
             nuevoElemento = combinacionExistenteB.resultado
             descripcion = dbElementos.objects.get(nombre=nuevoElemento).descripcion
+            # Añadimos al usuario como creador para que le aparezca el elemento
+            añadir = combinacionExistenteB.resultado
+            añadir.creadores.add(request.user)
         # Si no está registrada la combinación, le pedimos a la IA que la genere
         else:
 
@@ -144,10 +148,9 @@ def alquimia(request):
                 elementoExistente = dbElementos.objects.filter(nombre=resultadoCombinacion).first()
                 if not elementoExistente:
                     nuevoElemento.save()
-                else:
-                    nuevoElemento = elementoExistente
-                # Esta línea se supone que debería añadir al usuario actual como creador, pero solo lo hace la primera vez
-                nuevoElemento.creadores.add(request.user)
+                # Esto debería añadir al usuario actual como creador si ya he arreglado el bug
+                añadir = dbElementos.objects.get(nombre=resultadoCombinacion)
+                añadir.creadores.add(request.user)
                 # Como "resultado" es una clave foránea que hace referencia a dbElementos.nombre, tenemos que hacer esto
                 resultadoCombinacion = dbElementos.objects.get(nombre=nuevoElemento)
                 nuevaCombinacion = dbCombinaciones(elemento1=elemento1, elemento2=elemento2, resultado=resultadoCombinacion,)
