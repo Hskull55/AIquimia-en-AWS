@@ -13,6 +13,7 @@ Estamos trabajando en ello...
     - [Models](https://docs.djangoproject.com/en/5.0/topics/db/models/)
     - [Using the Django authentication system](https://docs.djangoproject.com/en/5.0/topics/auth/default/)
     - [Settings](https://docs.djangoproject.com/en/dev/ref/settings/)
+    - [Many-to-many relationships](https://docs.djangoproject.com/en/5.0/topics/db/examples/many_to_many/)
 - [Figma](figma.com)
     - [Free Emoji Pack](https://www.figma.com/file/OdVPE3ESsulyRzomUlGeB6/Free-Emoji-Pack-(Community)?type=design&node-id=0-1&mode=design&t=hQgmA9QwF8tic0lb-0)
 - [GitHub](https://github.com/)

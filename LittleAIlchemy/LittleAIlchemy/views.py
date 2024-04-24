@@ -11,8 +11,13 @@ import replicate
 @login_required
 @csrf_protect
 def alquimia(request):
-    # Obtenemos los elementos de la base de datos
-    listaElementos = dbElementos.objects.all()
+
+    # Obtenemos los elementos creados por el usuario actual
+    elementosCreados = request.user.elementosCreados.all()
+    # Obtenemos los elementos con IDs 1, 2, 3 y 4; que son Agua, Aire, Tierra y Fuego
+    elementosBasicos = dbElementos.objects.filter(id__in=[1, 2, 3, 4])
+    # Mostramos los elementos del jugador
+    listaElementos = elementosCreados | elementosBasicos
     # Inicializamos varias varibales sin valor para evitar errores al cargar la página
     nuevoElemento = None
     error = None
@@ -136,15 +141,17 @@ def alquimia(request):
                 resultadoCombinacion = resultadoCombinacion.strip('"').replace(".", "")
                 nuevoElemento = dbElementos(nombre=resultadoCombinacion, descripcion=descripcion, imagen=imagen)
                 # Comprobamos si ya estaba registrado para que no se repita
-                existeElemento = dbElementos.objects.filter(nombre=resultadoCombinacion)
-                if not existeElemento:
+                elementoExistente = dbElementos.objects.filter(nombre=resultadoCombinacion).first()
+                if not elementoExistente:
                     nuevoElemento.save()
-
+                else:
+                    nuevoElemento = elementoExistente
+                # Esta línea se supone que debería añadir al usuario actual como creador, pero solo lo hace la primera vez
+                nuevoElemento.creadores.add(request.user)
                 # Como "resultado" es una clave foránea que hace referencia a dbElementos.nombre, tenemos que hacer esto
                 resultadoCombinacion = dbElementos.objects.get(nombre=nuevoElemento)
                 nuevaCombinacion = dbCombinaciones(elemento1=elemento1, elemento2=elemento2, resultado=resultadoCombinacion,)
                 nuevaCombinacion.save()
-
             # Este error se mostrará en un alert si la IA devuelve más de una palabra
             else:
                 error = "Something went wrong. Try again later"

@@ -46,8 +46,8 @@
     <div class="nav">
         <div id="botones">
             <!-- Si no ponía un formulario para enviarlo mediante POST, me daba un error al cerrar sesión-->
+            <button class="inicio" onclick="window.location.href='/'">Return</button>
             <form action="/logout/" method="post">
-                <button class="inicio" onclick="window.location.href='/'">Return</button>
                 {% csrf_token %}
                 <button type="submit">Log out</button>
             </form>

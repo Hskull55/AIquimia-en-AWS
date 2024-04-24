@@ -28,6 +28,10 @@ h1, h2{
     margin-bottom: 25px;
 }
 
+#botones {
+    display: flex;
+}
+
 header {
     position: absolute;
     top: 0;
