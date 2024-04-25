@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Modelo para los elementos
 class dbElementos(models.Model):
@@ -7,6 +8,7 @@ class dbElementos(models.Model):
     descripcion = models.TextField(blank=True)
     imagen = models.CharField(max_length=500)
     upload = models.ImageField(upload_to='static/imagenes/elementos/', blank=True)
+    creadores = models.ManyToManyField(User, related_name='elementosCreados')
 
     class Meta:
         app_label = 'LittleAIlchemy'

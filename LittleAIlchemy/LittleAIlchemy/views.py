@@ -1,19 +1,28 @@
 import os
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import logout
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from .models import dbElementos, dbCombinaciones
+from .forms import FormRegistro
 import replicate
 
+@login_required
 @csrf_protect
 def alquimia(request):
-    # Obtenemos los elementos de la base de datos
-    listaElementos = dbElementos.objects.all()
+
+    # Obtenemos los elementos creados por el usuario actual
+    elementosCreados = request.user.elementosCreados.all()
+    # Obtenemos los elementos con IDs 1, 2, 3 y 4; que son Agua, Aire, Tierra y Fuego
+    elementosBasicos = dbElementos.objects.filter(id__in=[1, 2, 3, 4])
+    # Mostramos los elementos del jugador
+    listaElementos = (elementosCreados | elementosBasicos).order_by('nombre')
     # Inicializamos varias varibales sin valor para evitar errores al cargar la página
     nuevoElemento = None
     error = None
     descripcion = None
     imagen = None
-
     if request.method == 'POST':
         # Asignamos los ids de los elementos a una variable
         elementoId1 = request.POST.getlist('elementoId[]')[0]
@@ -29,15 +38,20 @@ def alquimia(request):
         # Verificamos si la combinación ya existe en la base de datos
         combinacionExistenteA = dbCombinaciones.objects.filter(elemento1=elemento1, elemento2=elemento2).first()
         combinacionExistenteB = dbCombinaciones.objects.filter(elemento1=elemento2, elemento2=elemento1).first()
-
         # Si la combinación ya existe, sacamos la información de la base de datos
         if combinacionExistenteA:
             nuevoElemento = combinacionExistenteA.resultado
             descripcion = dbElementos.objects.get(nombre=nuevoElemento).descripcion
+            # Añadimos al usuario como creador para que le aparezca el elemento
+            añadir = combinacionExistenteA.resultado
+            añadir.creadores.add(request.user)
         # Esto es por si están al revés
         elif combinacionExistenteB:
             nuevoElemento = combinacionExistenteB.resultado
             descripcion = dbElementos.objects.get(nombre=nuevoElemento).descripcion
+            # Añadimos al usuario como creador para que le aparezca el elemento
+            añadir = combinacionExistenteB.resultado
+            añadir.creadores.add(request.user)
         # Si no está registrada la combinación, le pedimos a la IA que la genere
         else:
 
@@ -81,7 +95,7 @@ def alquimia(request):
             # Input para la imagen
             input_data = {
                 "top_p": 1,
-                "prompt": f"Given the element {resultadoCombinacion}, tell me which of these file names sounds more closely related to it: (Fire.png, Water.png, Earth.png, Air.png, Explosion.png, Heart.png, Shiny.png, Evil.png, Skull.png, Hand.png, Dance.png, Clothes.png, Crown.png, Eyes.png, Tree.png, Flower.png, Snow.png, Lightning.png, Cloud.png, Internet.png, Moon.png, Sun.png, Soup.png, Dragon.png, Volcano.png, Rain.png, Rainbow.png, Weapon.png, Music.png, Wood.png, Game.png, Toxin.png, Blood.png, Person.png, Magic.png, Sport.png, Mountain.png, Sound.png)",
+                "prompt": f"Given the element {resultadoCombinacion}, tell me which of these file names sounds more closely related to it: (Fire.png, Water.png, Earth.png, Air.png, Explosion.png, Heart.png, Shiny.png, Evil.png, Skull.png, Hand.png, Dance.png, Clothes.png, Crown.png, Eyes.png, Tree.png, Flower.png, Snow.png, Lightning.png, Cloud.png, Internet.png, Moon.png, Sun.png, Soup.png, Dragon.png, Volcano.png, Rain.png, Rainbow.png, Weapon.png, Music.png, Wood.png, Game.png, Toxin.png, Blood.png, Person.png, Magic.png, Sport.png, Mountain.png, Sound.png, Wave.png, Biohazard.png, Building.png, Virus.png, Desert.png)",
                 "system_prompt":"You choose a file name from a list. Always output your answer with just the file name. No pre-amble. Only choose from the given list. If not present on the list, choose the closest one but don't create a new one that is not on the list",
 #                "system_prompt":"You are an ai that chooses the most suitable file name for a given word. If there isn't a direct match, you need to choose the file name that's more closely associated with the word given as input. Answer with just the name of the file. Don't write anything else. The output must be just the name of the file. It must be one of the file names given as input. The output will never be a file name that is not on the provided list",
                 "temperature": 0.75,
@@ -131,20 +145,50 @@ def alquimia(request):
                 resultadoCombinacion = resultadoCombinacion.strip('"').replace(".", "")
                 nuevoElemento = dbElementos(nombre=resultadoCombinacion, descripcion=descripcion, imagen=imagen)
                 # Comprobamos si ya estaba registrado para que no se repita
-                existeElemento = dbElementos.objects.filter(nombre=resultadoCombinacion)
-                if not existeElemento:
+                elementoExistente = dbElementos.objects.filter(nombre=resultadoCombinacion).first()
+                if not elementoExistente:
                     nuevoElemento.save()
-
+                # Esto debería añadir al usuario actual como creador si ya he arreglado el bug
+                añadir = dbElementos.objects.get(nombre=resultadoCombinacion)
+                añadir.creadores.add(request.user)
                 # Como "resultado" es una clave foránea que hace referencia a dbElementos.nombre, tenemos que hacer esto
                 resultadoCombinacion = dbElementos.objects.get(nombre=nuevoElemento)
                 nuevaCombinacion = dbCombinaciones(elemento1=elemento1, elemento2=elemento2, resultado=resultadoCombinacion,)
                 nuevaCombinacion.save()
-
             # Este error se mostrará en un alert si la IA devuelve más de una palabra
             else:
                 error = "Something went wrong. Try again later"
 
     return render(request, 'alquimia.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen})
 
+# Renderizamos la página de inicio
+@login_required
 def inicio(request):
     return render(request, 'inicio.html')
+
+# Utilizando el formulario predeterminado de Django para inicio de sesión "LoginView", implantamos el sistema de autenticación de usarios
+class MiLoginView(LoginView):
+    # El login se hará mediante la plantilla "login.html"
+    template_name = 'login.html'
+    # Si el login tiene éxito, nos redirigirá a la raíz del proyecto (Página de inicio)
+    def get_success_url(self):
+        return '/'
+
+# Página de registro
+def registro(request):
+    # Esto es `para cuando envías el formulario de registro, validarlo y llevarte a login
+    if request.method == 'POST':
+        formulario = FormRegistro(request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect('/login/')
+    else:
+    # Y esto para que cuando entres normalmente, te aparezca el formulario y ya
+        formulario = FormRegistro()
+    return render(request, 'registro.html', {'form': formulario})
+
+
+# Vista para cerrar sesión
+def vistaLogout(request):
+    logout(request)
+    return redirect('/login/')
