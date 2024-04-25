@@ -148,3 +148,29 @@ function despejar() {
         }
     });
 }
+
+// Event listener para la barra de búsqueda
+
+// El evento se activa cuando el DOM se ha cargado completamente porque sin esto no me funcionaba
+document.addEventListener('DOMContentLoaded', function() {
+    // Guardamos en una variable el texto que se está buscando y los elementos
+    var busqueda = document.getElementById('busqueda');
+    var elementos = document.querySelectorAll('.elemento');
+
+    // Añadimos al campo de texto de la barra de búsqueda un evento que se activa al soltar una tecla
+    busqueda.addEventListener('keyup', function() {
+        // Convertimos el texto en minúsculas para que sea más manejable
+        var busquedaControl = this.value.trim().toLowerCase();
+
+        elementos.forEach(function(elemento) {
+            var texto = elemento.textContent.trim().toLowerCase();
+            // Si el nombre de un elemento coincide con lo que tenemos en la barra de búsqueda, mostramos el elemento
+            if (texto.includes(busquedaControl)) {
+                elemento.style.display = 'block';
+            // En caso contrario lo ocultamos
+            } else {
+                elemento.style.display = 'none';
+            }
+        });
+    });
+});

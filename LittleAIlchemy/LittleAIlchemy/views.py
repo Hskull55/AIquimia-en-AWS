@@ -17,7 +17,7 @@ def alquimia(request):
     # Obtenemos los elementos con IDs 1, 2, 3 y 4; que son Agua, Aire, Tierra y Fuego
     elementosBasicos = dbElementos.objects.filter(id__in=[1, 2, 3, 4])
     # Mostramos los elementos del jugador
-    listaElementos = elementosCreados | elementosBasicos
+    listaElementos = (elementosCreados | elementosBasicos).order_by('nombre')
     # Inicializamos varias varibales sin valor para evitar errores al cargar la página
     nuevoElemento = None
     error = None

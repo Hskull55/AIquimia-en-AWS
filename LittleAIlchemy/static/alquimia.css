@@ -150,6 +150,17 @@ button:hover {
     padding-top: 20px;
 }
 
+#busqueda {
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 16px;
+    margin: 10px;
+    width: calc(100% - 20px);
+    box-sizing: border-box;
+    /* outline: none */
+}
+
 .contenedor{
     display: flex;
     flex-wrap: wrap;
