@@ -8,6 +8,7 @@ class dbElementos(models.Model):
     descripcion = models.TextField(blank=True)
     imagen = models.CharField(max_length=500)
     upload = models.ImageField(upload_to='static/imagenes/elementos/', blank=True)
+    descubiertoPor = models.CharField(max_length=255, blank=True)
     creadores = models.ManyToManyField(User, related_name='elementosCreados')
 
     class Meta:

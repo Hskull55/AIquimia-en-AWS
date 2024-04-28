@@ -123,6 +123,7 @@ function combinar() {
 window.onload = function () {
     var nuevoElemento = document.getElementById('nuevoElemento').innerText;
     var descripcion = document.getElementById('descripcion').innerText;
+    var descubiertoPor = document.getElementById('descubiertoPor').innerText;
 
     if (nuevoElemento !== "None") {
         swal("You have created " + nuevoElemento, descripcion, {

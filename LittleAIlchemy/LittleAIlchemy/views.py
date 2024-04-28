@@ -23,6 +23,8 @@ def alquimia(request):
     error = None
     descripcion = None
     imagen = None
+    descubiertoPor= None
+
     if request.method == 'POST':
         # Asignamos los ids de los elementos a una variable
         elementoId1 = request.POST.getlist('elementoId[]')[0]
@@ -42,6 +44,7 @@ def alquimia(request):
         if combinacionExistenteA:
             nuevoElemento = combinacionExistenteA.resultado
             descripcion = dbElementos.objects.get(nombre=nuevoElemento).descripcion
+            descubiertoPor = dbElementos.objects.get(nombre=nuevoElemento).descubiertoPor
             # Añadimos al usuario como creador para que le aparezca el elemento
             añadir = combinacionExistenteA.resultado
             añadir.creadores.add(request.user)
@@ -49,6 +52,7 @@ def alquimia(request):
         elif combinacionExistenteB:
             nuevoElemento = combinacionExistenteB.resultado
             descripcion = dbElementos.objects.get(nombre=nuevoElemento).descripcion
+            descubiertoPor = dbElementos.objects.get(nombre=nuevoElemento).descubiertoPor
             # Añadimos al usuario como creador para que le aparezca el elemento
             añadir = combinacionExistenteB.resultado
             añadir.creadores.add(request.user)
@@ -131,9 +135,6 @@ def alquimia(request):
                          imagen = corte
                          break
 
-
-            print(imagen)
-
             # Si la API devuleve algo raro / un nombre que no existe, le asignamos al elemento la imagen de uno de los dos a partir de los cuales se creó
             rutaImagen = os.path.join("static/imagenes/elementos/", imagen)
             if not os.path.exists(rutaImagen):
@@ -143,12 +144,16 @@ def alquimia(request):
             if resultadoCombinacion and len(resultadoCombinacion.split()) == 1:
                 # Si la IA devuelve el resultado entre comillas o con un punto, lo quitamos
                 resultadoCombinacion = resultadoCombinacion.strip('"').replace(".", "")
-                nuevoElemento = dbElementos(nombre=resultadoCombinacion, descripcion=descripcion, imagen=imagen)
                 # Comprobamos si ya estaba registrado para que no se repita
                 elementoExistente = dbElementos.objects.filter(nombre=resultadoCombinacion).first()
                 if not elementoExistente:
+                    descubiertoPor = request.user
+                    nuevoElemento = dbElementos(nombre=resultadoCombinacion, descripcion=descripcion, imagen=imagen, descubiertoPor=descubiertoPor)
                     nuevoElemento.save()
-                # Esto debería añadir al usuario actual como creador si ya he arreglado el bug
+                else:
+                    descubiertoPor = dbElementos.objects.get(nombre=elementoExistente).descubiertoPor
+                    nuevoElemento = dbElementos(nombre=resultadoCombinacion, descripcion=descripcion, imagen=imagen, descubiertoPor=descubiertoPor)
+            # Esto debería añadir al usuario actual como creador si ya he arreglado el bug
                 añadir = dbElementos.objects.get(nombre=resultadoCombinacion)
                 añadir.creadores.add(request.user)
                 # Como "resultado" es una clave foránea que hace referencia a dbElementos.nombre, tenemos que hacer esto
@@ -159,7 +164,7 @@ def alquimia(request):
             else:
                 error = "Something went wrong. Try again later"
 
-    return render(request, 'alquimia.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen})
+    return render(request, 'alquimia.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen, 'descubiertoPor':descubiertoPor})
 
 # Renderizamos la página de inicio
 @login_required
