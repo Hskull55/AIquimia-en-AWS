@@ -139,6 +139,15 @@ window.onload = function () {
     }
 };
 
+// Función para mostrar el marcador
+function puntuacion() {
+    var marcador = document.getElementById('puntuacion').innerText;
+//    alert(puntuacion);
+    swal("TOP 10", marcador, {
+        button: "Nice",
+    });
+}
+
 // Función que limpia la mesa de alquimia
 
 function despejar() {
@@ -175,3 +184,4 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+

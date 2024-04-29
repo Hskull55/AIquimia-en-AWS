@@ -1,4 +1,5 @@
 import os
+from collections import Counter
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
@@ -164,7 +165,11 @@ def alquimia(request):
             else:
                 error = "Something went wrong. Try again later"
 
-    return render(request, 'alquimia.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen, 'descubiertoPor':descubiertoPor})
+    # Sin flat=True los nombres no salen bien
+    contadorDescubrimientos = Counter(dbElementos.objects.values_list('descubiertoPor', flat=True))
+    top = contadorDescubrimientos.most_common(10)
+
+    return render(request, 'alquimia.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen, 'descubiertoPor':descubiertoPor, 'top':top})
 
 # Renderizamos la página de inicio
 @login_required

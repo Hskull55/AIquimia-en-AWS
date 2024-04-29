@@ -3,6 +3,7 @@ Estamos trabajando en ello...
 
 ## Páginas y recuros consultados para la realización de este proyecto:
 
+- [Bootstrap](https://icons.getbootstrap.com/)
 - [ChatGPT](https://chat.openai.com/)
 - [CODEDEC](https://codedec.com/)
     - [How to create login and registration in Django](https://codedec.com/tutorials/how-to-create-login-and-registration-in-django/)
@@ -35,6 +36,7 @@ Estamos trabajando en ello...
     - [Django LoginView](https://www.pythontutorial.net/django-tutorial/django-loginview/)
 - [Real Python](https://realpython.com/)
     - [Python's F-String for String Interpolation and Formatting](https://realpython.com/python-f-strings/)
+    - [Python's Counter: The Pythonic Way to Count Objects](https://realpython.com/python-counter/#:~:text=Python%27s%20Counter%3A%20The%20Pythonic%20Way%20to%20Count%20Objects,and%20using%20Counter%20objects%20in%20your%20code.%20)
 - [Reddit - Django](https://www.reddit.com/r/django/)
 - [Replicate](https://replicate.com/)
     - [Run a model from Python](https://replicate.com/docs/get-started/python)
