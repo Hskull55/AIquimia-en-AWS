@@ -184,7 +184,16 @@ button:hover {
     text-align: center;
     cursor: grab;
     font-weight: bold;
-    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Lucida Handwriting', cursive;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.elemento:hover{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+.descubrimiento:hover{
+    box-shadow: 0 0 15px 3px rgba(128, 0, 128, 0.8);
 }
 
 .vacio {
@@ -194,6 +203,10 @@ button:hover {
     border: 4px dashed #3E2719;
     margin: 10px;
     align-items:center;
+}
+
+.vacio .elemento:hover{
+    box-shadow: 0 0 0px rgba(0, 0, 0, 0);
 }
 
 .math{
@@ -226,10 +239,18 @@ button:hover {
 .swal-title {
     color: black;
     font-size: 20px;
+    font-family: 'Lucida Handwriting', cursive;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.40);
+}
+
+.swal-text{
+    font-family: 'Lucida Handwriting', cursive;
+    color: rgba(0, 0, 0, .80);
 }
 
 .swal-modal{
-    background-color: #f8f8e7;
+    background-image: url(imagenes/paper.jpg);
+    background-position: center;
     border: 2px solid black;  
 }
 
