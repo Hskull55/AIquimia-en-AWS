@@ -1,0 +1,16 @@
+@media only screen and (max-width: 600px), (max-height: 400px){
+    body *, .contenedorAlquimia, .nav {
+        display: none; 
+    }
+
+    html {
+        background-image: url(imagenes/estrellas.jpg);
+        background-position: right;
+    }
+}
+
+@media only screen and (max-height: 500px){
+    .info {
+        display:none;
+    }
+}

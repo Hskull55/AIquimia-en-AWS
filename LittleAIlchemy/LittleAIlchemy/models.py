@@ -26,6 +26,7 @@ class dbCombinaciones(models.Model):
     elemento1 = models.ForeignKey(dbElementos, related_name='elemento1Combinaciones', on_delete=models.CASCADE)
     elemento2 = models.ForeignKey(dbElementos, related_name='elemento2Combinaciones', on_delete=models.CASCADE)
     resultado = models.ForeignKey(dbElementos, related_name='combinaciones', on_delete=models.CASCADE)
+    creadoresC = models.ManyToManyField(User, related_name='combinacionesCreados')
 
     class Meta:
         app_label = 'LittleAIlchemy'

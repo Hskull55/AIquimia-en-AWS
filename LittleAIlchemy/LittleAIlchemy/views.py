@@ -49,6 +49,8 @@ def alquimia(request):
             # Añadimos al usuario como creador para que le aparezca el elemento
             añadir = combinacionExistenteA.resultado
             añadir.creadores.add(request.user)
+            # Añadimos al usuario actual a la lista de usuarios que han realizado esta combinación
+            combinacionExistenteA.creadoresC.add(request.user)
         # Esto es por si están al revés
         elif combinacionExistenteB:
             nuevoElemento = combinacionExistenteB.resultado
@@ -57,6 +59,8 @@ def alquimia(request):
             # Añadimos al usuario como creador para que le aparezca el elemento
             añadir = combinacionExistenteB.resultado
             añadir.creadores.add(request.user)
+            # Añadimos al usuario actual a la lista de usuarios que han realizado esta combinación
+            combinacionExistenteB.creadoresC.add(request.user)
         # Si no está registrada la combinación, le pedimos a la IA que la genere
         else:
 
@@ -83,7 +87,6 @@ def alquimia(request):
                 "top_p": 1,
                 "prompt": f"Give me a brief description for {resultadoCombinacion}",
                 "system_prompt": "You are an AI that describes words. You will receive an input and you need to describe it. The output must be just the description of said word, so don't say anything like 'Here's the description for X' just start writing the description itself.",
-#                "system_prompt": "You are an AI that combines elements as if we were playing Little Alchemy. As input you will recieve a word. I need you to come up with a description for said word. Just give me the description, no need to tell me anything else; so don't say Sure, Of course or anything like that, just start describing whatever was created. Do not mention the elements you think it came from. Don't start by saying 'Sure, heres the description for (WORD)' or anything like that and try to give a serious, easy to undertand description. If for whatever reason you can't create a serious, objective description or the input is a word that doesn't exist, then simply try to come up with a description that seems logical given the context of the game",
                 "temperature": 0.75,
                 "max_new_tokens": 600,
                 "repetition_penalty": 1
@@ -100,9 +103,8 @@ def alquimia(request):
             # Input para la imagen
             input_data = {
                 "top_p": 1,
-                "prompt": f"Given the element {resultadoCombinacion}, tell me which of these file names sounds more closely related to it: (Fire.png, Water.png, Earth.png, Air.png, Explosion.png, Heart.png, Shiny.png, Evil.png, Skull.png, Hand.png, Dance.png, Clothes.png, Crown.png, Eyes.png, Tree.png, Flower.png, Snow.png, Lightning.png, Cloud.png, Internet.png, Moon.png, Sun.png, Soup.png, Dragon.png, Volcano.png, Rain.png, Rainbow.png, Weapon.png, Music.png, Wood.png, Game.png, Toxin.png, Blood.png, Person.png, Magic.png, Sport.png, Mountain.png, Sound.png, Wave.png, Biohazard.png, Building.png, Virus.png, Desert.png)",
+                "prompt": f"Given the element {resultadoCombinacion}, tell me which of these file names sounds more closely related to it: (Fire.png, Water.png, Earth.png, Air.png, Explosion.png, Heart.png, Shiny.png, Evil.png, Skull.png, Hand.png, Dance.png, Clothes.png, Crown.png, Eyes.png, Tree.png, Flower.png, Snow.png, Lightning.png, Cloud.png, Internet.png, Moon.png, Sun.png, Soup.png, Dragon.png, Volcano.png, Rain.png, Rainbow.png, Weapon.png, Music.png, Wood.png, Game.png, Toxin.png, Blood.png, Person.png, Magic.png, Sport.png, Mountain.png, Sound.png, Wave.png, Biohazard.png, Building.png, Virus.png, Desert.png, Brick.png, Island.png, Car.png, Train.png, Plane.png, Boat.png, Tornado.png, Money.png, Robot.png, Luck.png, Logic.png, Art.png, Danger.png, Celebration.png, Bubbles.png, Prohibition.png, Spiral.png)",
                 "system_prompt":"You choose a file name from a list. Always output your answer with just the file name. No pre-amble. Only choose from the given list. If not present on the list, choose the closest one but don't create a new one that is not on the list",
-#                "system_prompt":"You are an ai that chooses the most suitable file name for a given word. If there isn't a direct match, you need to choose the file name that's more closely associated with the word given as input. Answer with just the name of the file. Don't write anything else. The output must be just the name of the file. It must be one of the file names given as input. The output will never be a file name that is not on the provided list",
                 "temperature": 0.75,
                 "max_new_tokens": 60,
                 "repetition_penalty": 1
@@ -159,8 +161,10 @@ def alquimia(request):
                 añadir.creadores.add(request.user)
                 # Como "resultado" es una clave foránea que hace referencia a dbElementos.nombre, tenemos que hacer esto
                 resultadoCombinacion = dbElementos.objects.get(nombre=nuevoElemento)
-                nuevaCombinacion = dbCombinaciones(elemento1=elemento1, elemento2=elemento2, resultado=resultadoCombinacion,)
+                nuevaCombinacion = dbCombinaciones(elemento1=elemento1, elemento2=elemento2, resultado=resultadoCombinacion)
                 nuevaCombinacion.save()
+                # Añadimos al usuario actual a la lista de usuarios que han realizado esta combinación
+                nuevaCombinacion.creadoresC.add(request.user)
             # Este error se mostrará en un alert si la IA devuelve más de una palabra
             else:
                 error = "Something went wrong. Try again later"
@@ -168,8 +172,9 @@ def alquimia(request):
     # Sin flat=True los nombres no salen bien
     contadorDescubrimientos = Counter(dbElementos.objects.values_list('descubiertoPor', flat=True))
     top = contadorDescubrimientos.most_common(10)
-
-    return render(request, 'alquimia.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen, 'descubiertoPor':descubiertoPor, 'top':top})
+    contadorElementos = dbElementos.objects.filter(creadores=request.user).count()
+    contadorCombinaciones = dbCombinaciones.objects.filter(creadoresC=request.user).count()
+    return render(request, 'alquimia.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen, 'descubiertoPor':descubiertoPor, 'top':top, 'contadorElementos':contadorElementos, 'contadorCombinaciones':contadorCombinaciones})
 
 # Renderizamos la página de inicio
 @login_required

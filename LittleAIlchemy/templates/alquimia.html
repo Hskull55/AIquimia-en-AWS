@@ -10,7 +10,8 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert"></script> 
     <script src="{% static 'alquimia.js' %}" defer></script> <!-- JavaScript-->
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'imagenes/favicon.ico' %}"> <!-- Favicon -->
-    <link rel="stylesheet" href="{% static 'alquimia.css' %}"> <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'alquimia.css' %}"> <!-- CSS principal -->
+    <link rel="stylesheet" href="{% static 'responsive.css' %}"> <!-- CSS responsive -->
     <!-- Iconos de Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
@@ -29,21 +30,28 @@
         </div>
     </div>
     <div class="contenedorAlquimia">
-	<!-- Zona para combinar los elementos -->
+        <!-- Zona para combinar los elementos -->
         <div class="izquierda">
-            <div class="superior">
-                <div class="vacio contenedor"></div>
-                <div class="math">+</div>
-                <div class="vacio contenedor"></div>
+            <div class="info"> 
+                <span class="pLogin"><i class="bi bi-person-circle"></i> You are currently logged in as <span class="infoText">{{ user.username }}</span></span>
+                <span><i class="bi bi-arrows-angle-contract"></i> You have discovered <span class="infoText">{{ contadorCombinaciones }}</span> different combinations</span>
+                <span><i class="bi bi-search"></i> You have created <span class="infoText">{{ contadorElementos }}</span> elements</span>
             </div>
-	    <!-- Formulario que envía los elementos a combinar -->
-            <form id="formCombinar" action="" method="post">{% csrf_token %}
-                <input type="hidden" name="elementoId[]" id="hidden1">
-                <input type="hidden" name="elementoId[]" id="hidden2">
-                <button type="button" onclick="combinar()">Combine</button>
-                <button type="button" onclick="despejar()" id="limpiar"><i class="bi bi-trash"></i></button>
-            </form>
-        </div>
+            <div class="zonaCombinar">
+                <div class="superior">
+                    <div class="vacio contenedor"></div>
+                    <div class="math">+</div>
+                    <div class="vacio contenedor"></div>
+                </div>
+	        <!-- Formulario que envía los elementos a combinar -->
+                <form id="formCombinar" action="" method="post">{% csrf_token %}
+                    <input type="hidden" name="elementoId[]" id="hidden1">
+                    <input type="hidden" name="elementoId[]" id="hidden2">
+                    <button type="button" onclick="combinar()">Combine</button>
+                    <button type="button" onclick="despejar()" id="limpiar"><i class="bi bi-trash"></i></button>
+                </form>
+            </div>
+        </div>     
         <!-- Zona que contiene los elementos del usuario -->
         <div class="derecha">
             <div id="buscar">
@@ -68,7 +76,6 @@
                 <button type="submit">Log out <i class="bi bi-x-square"></i></button>
             </form>
         </div>
-        <p class="pLogin"><i class="bi bi-person-circle"></i> You are currently logged in as <span style="color: red">{{ user.username }}<span></p>
     </div>
     
 
