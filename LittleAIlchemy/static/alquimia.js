@@ -124,10 +124,17 @@ window.onload = function () {
     var nuevoElemento = document.getElementById('nuevoElemento').innerText;
     var descripcion = document.getElementById('descripcion').innerText;
     var descubiertoPor = document.getElementById('descubiertoPor').innerText;
+    var imagen = document.getElementById('imagenSwal').innerText;
+    var usuario = document.getElementById('usuario').innerText;
+
+    // Si el usuario actual descubió el elemento, cambiamos el color del destello
+    var tipoDestello = usuario == descubiertoPor ? "destelloShiny" : "destello"; 
 
     if (nuevoElemento !== "None") {
         swal("You have created " + nuevoElemento, descripcion, {
             button: "That's rad.",
+            icon: "../static/imagenes/elementos/" + imagen,
+            className: tipoDestello
         });
     }
 

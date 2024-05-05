@@ -17,10 +17,12 @@
 </head>
 
 <body class="bodyAlquimia">
-    <!-- Este div se utiliza para guardar el elemento creado después de procesar el formulario -->
+    <!-- Estos divs se utilizan para guardar datos después de procesar el formulario -->
     <div id="nuevoElemento" style="display: none;">{{ nuevoElemento }}</div>
     <div id="descripcion" style="display: none;">{{ descripcion }}</div>
     <div id="descubiertoPor" style="display: none;">{{ descubiertoPor }}</div>
+    <div id="imagenSwal" style="display: none;">{{ imagen }}</div>
+    <div id="usuario" style="display: none;">{{ usuario }}</div>
     <!-- Recorremos la lista top de views.py y añadimos sus valores -->
     <div id="puntuacion" style="display: none;">
         <div>
@@ -69,7 +71,7 @@
     <div class="nav">
         <div id="botones">
             <!-- Si no ponía un formulario para enviarlo mediante POST, me daba un error al cerrar sesión-->
-            <button class="inicio" onclick="window.location.href='/'">Return <i class="bi bi-house"></i></button>
+            <button class="inicio destello" onclick="window.location.href='/'">Return <i class="bi bi-house"></i></button>
             <button onclick="puntuacion()">Leaderboard <i class="bi bi-trophy"></i></button>
             <form action="/logout/" method="post">
                 {% csrf_token %}

@@ -278,6 +278,14 @@ button:hover {
     border: 2px solid black;  
 }
 
+.swal-overlay--show-modal .swal-modal.destello {
+    animation: destello 2s infinite linear;
+}
+
+.swal-overlay--show-modal .swal-modal.destelloShiny {
+    animation: destelloShiny 2s infinite linear;
+}
+
 .swal-button-container {
     text-align: center;
     display: block;
@@ -293,6 +301,30 @@ button:hover {
 
 .swal-button:not([disabled]):hover {
     background-color: white;
+}
+
+@keyframes destello {
+    0% {
+        box-shadow: 0 0 30px 15px rgba(128, 0, 0, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 40px 20px rgba(255, 255, 255, 0.5);
+    }
+    100% {
+        box-shadow: 0 0 30px 15px rgba(128, 0, 0, 0.7);
+    }
+}
+
+@keyframes destelloShiny {
+    0% {
+        box-shadow: 0 0 30px 15px rgba(128, 0, 128, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 40px 20px rgba(255, 255, 255, 0.5);
+    }
+    100% {
+        box-shadow: 0 0 30px 15px rgba(128, 0, 128, 0.7);
+    }
 }
 
 .swal-button:focus {

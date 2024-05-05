@@ -25,6 +25,7 @@ def alquimia(request):
     descripcion = None
     imagen = None
     descubiertoPor= None
+    usuario = request.user
 
     if request.method == 'POST':
         # Asignamos los ids de los elementos a una variable
@@ -171,15 +172,21 @@ def alquimia(request):
 
     # Sin flat=True los nombres no salen bien
     contadorDescubrimientos = Counter(dbElementos.objects.values_list('descubiertoPor', flat=True))
+    # Solo pillamos a los 10 primeros
     top = contadorDescubrimientos.most_common(10)
+    # Contamos cuantos elementos y combinaciones ha creado el usuario (Total, no descubierto)
     contadorElementos = dbElementos.objects.filter(creadores=request.user).count()
     contadorCombinaciones = dbCombinaciones.objects.filter(creadoresC=request.user).count()
-    return render(request, 'alquimia.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen, 'descubiertoPor':descubiertoPor, 'top':top, 'contadorElementos':contadorElementos, 'contadorCombinaciones':contadorCombinaciones})
+    if nuevoElemento:
+        imagen = nuevoElemento.imagen
+    return render(request, 'alquimia.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen, 'descubiertoPor':descubiertoPor, 'top':top, 'contadorElementos':contadorElementos, 'contadorCombinaciones':contadorCombinaciones, 'usuario':usuario})
 
 # Renderizamos la página de inicio
 @login_required
 def inicio(request):
-    return render(request, 'inicio.html')
+    # Miramos si el usuario es administrador para mostrar o no el botón de la consola
+    soyAdmin = request.user.groups.filter(name='Administradores').exists()
+    return render(request, 'inicio.html', {'soyAdmin':soyAdmin})
 
 # Utilizando el formulario predeterminado de Django para inicio de sesión "LoginView", implantamos el sistema de autenticación de usarios
 class MiLoginView(LoginView):

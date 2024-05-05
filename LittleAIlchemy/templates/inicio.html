@@ -18,7 +18,10 @@
     </header>
     <div id="botonesInicio">
         <button onclick="window.location.href='alquimia'">Play AIquimia</button>
-        <button onclick="window.location.href='admin'">Administration console</button>
+        <button onclick="window.location.href='https://littlealchemy.com/'">Play a better game</button>
+        {% if soyAdmin %}
+            <button onclick="window.location.href='admin'">Administration console</button>
+        {% endif %}
     </div>
 </body>
 
