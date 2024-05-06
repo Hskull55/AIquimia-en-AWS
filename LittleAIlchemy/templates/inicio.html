@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AIquimia</title>
     {% load static %}
+    <!-- Biblioteca SweetAlert para alert personalizado -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert"></script>
     <script src="{% static '../alquimia.js' %}" defer></script>
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'imagenes/favicon.ico' %}">
     <link rel="stylesheet" href="{% static 'alquimia.css' %}">
@@ -27,7 +29,9 @@
     <script>
         {% if bienvenida %}
             window.onload = function() {
-                alert("Welcome to AIquimia");
+                swal("Hey, you, you're finally awake", "Welcome, young sorcerer, to the kingdom of Arstotzka. \n\nAs the newest wielder of the arcane arts, your duty is clear: experiment with the elements to create powerful concoctions for our sovereign, Hskull55 the Destroyer. \n\nIn your laboratory, the forces of fire, water, earth, and air await your command. Combine them wisely to unlock new powers and unravel the secrets of ancient alchemy. But beware, for your choices carry consequences, both wondrous and perilous. \n\nVenture forth, brave sorcerer, and prove yourself worthy of the title. Will you master the art of alchemy and serve our kingdom faithfully, or will your experiments lead to chaos and ruin? The fate of the realm rests in your hands.", {
+                    button: "Glory to Arstotzka",
+                });
             };
         {% endif %}
     </script>

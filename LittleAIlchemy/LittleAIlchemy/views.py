@@ -190,7 +190,7 @@ def inicio(request):
     # Aquí usamos una cookie para ver si es la primera vez que un usuario visita la página principal
     clienteHabitual = request.COOKIES.get('clienteHabitual')
     if clienteHabitual != 'true':
-        # Si la cookie no existe, cargamos la página y la creamos
+        # Si la cookie está en "false" o no existe, cargamos la página y la creamos
         response = HttpResponse(render(request, 'inicio.html', {'soyAdmin': soyAdmin, 'bienvenida': True}))
         response.set_cookie('clienteHabitual', 'true')
         return response
