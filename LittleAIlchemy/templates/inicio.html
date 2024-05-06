@@ -23,6 +23,14 @@
             <button onclick="window.location.href='admin'">Administration console</button>
         {% endif %}
     </div>
+    <!-- Esto solo se muestra la primera vez. Lo pongo así porque no merece la pena crear un archivo .js -->
+    <script>
+        {% if bienvenida %}
+            window.onload = function() {
+                alert("Welcome to AIquimia");
+            };
+        {% endif %}
+    </script>
 </body>
 
 </html>

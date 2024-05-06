@@ -1,5 +1,6 @@
 import os
 from collections import Counter
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
@@ -186,7 +187,16 @@ def alquimia(request):
 def inicio(request):
     # Miramos si el usuario es administrador para mostrar o no el botón de la consola
     soyAdmin = request.user.groups.filter(name='Administradores').exists()
-    return render(request, 'inicio.html', {'soyAdmin':soyAdmin})
+    # Aquí usamos una cookie para ver si es la primera vez que un usuario visita la página principal
+    clienteHabitual = request.COOKIES.get('clienteHabitual')
+    if clienteHabitual != 'true':
+        # Si la cookie no existe, cargamos la página y la creamos
+        response = HttpResponse(render(request, 'inicio.html', {'soyAdmin': soyAdmin, 'bienvenida': True}))
+        response.set_cookie('clienteHabitual', 'true')
+        return response
+    else:
+        # Si la cookie ya existe, solamente cargamos la página
+        return render(request, 'inicio.html', {'soyAdmin': soyAdmin, 'bienvenida': False})
 
 # Utilizando el formulario predeterminado de Django para inicio de sesión "LoginView", implantamos el sistema de autenticación de usarios
 class MiLoginView(LoginView):

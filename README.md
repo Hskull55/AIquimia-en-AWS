@@ -34,6 +34,7 @@ Estamos trabajando en ello...
 - [PythonTUTORIAL](https://www.pythontutorial.net/)
     - [Django ORM](https://www.pythontutorial.net/django-tutorial/django-orm/)
     - [Django LoginView](https://www.pythontutorial.net/django-tutorial/django-loginview/)
+    - [Django Cookies](https://www.pythontutorial.net/django-tutorial/django-cookies/)
 - [Real Python](https://realpython.com/)
     - [Python's F-String for String Interpolation and Formatting](https://realpython.com/python-f-strings/)
     - [Python's Counter: The Pythonic Way to Count Objects](https://realpython.com/python-counter/#:~:text=Python%27s%20Counter%3A%20The%20Pythonic%20Way%20to%20Count%20Objects,and%20using%20Counter%20objects%20in%20your%20code.%20)
