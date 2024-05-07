@@ -1,4 +1,4 @@
-import os
+import os, datetime, replicate
 from collections import Counter
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -8,12 +8,10 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from .models import dbElementos, dbCombinaciones
 from .forms import FormRegistro
-import replicate
 
 @login_required
 @csrf_protect
 def alquimia(request):
-
     # Obtenemos los elementos creados por el usuario actual
     elementosCreados = request.user.elementosCreados.all()
     # Obtenemos los elementos con IDs 1, 2, 3 y 4; que son Agua, Aire, Tierra y Fuego
@@ -180,7 +178,18 @@ def alquimia(request):
     contadorCombinaciones = dbCombinaciones.objects.filter(creadoresC=request.user).count()
     if nuevoElemento:
         imagen = nuevoElemento.imagen
-    return render(request, 'alquimia.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen, 'descubiertoPor':descubiertoPor, 'top':top, 'contadorElementos':contadorElementos, 'contadorCombinaciones':contadorCombinaciones, 'usuario':usuario})
+    #return render(request, 'alquimia.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen, 'descubiertoPor':descubiertoPor, 'top':top, 'contadorElementos':contadorElementos, 'contadorCombinaciones':contadorCombinaciones, 'usuario':usuario})
+    # Aquí usamos una cookie para ver si es la primera vez que un usuario entra al juego
+    tutorialHecho = request.COOKIES.get('tutorialHecho')
+    if tutorialHecho != 'true':
+        # Si la cookie está en "false" o no existe, cargamos la página y la creamos
+        response = HttpResponse(render(request, 'alquimia.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen, 'descubiertoPor':descubiertoPor, 'top':top, 'contadorElementos':contadorElementos, 'contadorCombinaciones':contadorCombinaciones, 'usuario':usuario, 'tutorial': True}))
+        expiracion = datetime.datetime.now() + datetime.timedelta(days=365)
+        response.set_cookie('tutorialHecho', 'true', expires=expiracion)
+        return response
+    else:
+        # Si la cookie ya existe, solamente cargamos la página
+        return render(request, 'alquimia.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen, 'descubiertoPor':descubiertoPor, 'top':top, 'contadorElementos':contadorElementos, 'contadorCombinaciones':contadorCombinaciones, 'usuario':usuario, 'tutorial': False})
 
 # Renderizamos la página de inicio
 @login_required
@@ -192,7 +201,8 @@ def inicio(request):
     if clienteHabitual != 'true':
         # Si la cookie está en "false" o no existe, cargamos la página y la creamos
         response = HttpResponse(render(request, 'inicio.html', {'soyAdmin': soyAdmin, 'bienvenida': True}))
-        response.set_cookie('clienteHabitual', 'true')
+        expiracion = datetime.datetime.now() + datetime.timedelta(days=365)
+        response.set_cookie('clienteHabitual', 'true', expires=expiracion)
         return response
     else:
         # Si la cookie ya existe, solamente cargamos la página

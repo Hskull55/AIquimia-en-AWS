@@ -17,6 +17,8 @@ Estamos trabajando en ello...
     - [Many-to-many relationships](https://docs.djangoproject.com/en/5.0/topics/db/examples/many_to_many/)
 - [Figma](figma.com)
     - [Free Emoji Pack](https://www.figma.com/file/OdVPE3ESsulyRzomUlGeB6/Free-Emoji-Pack-(Community)?type=design&node-id=0-1&mode=design&t=hQgmA9QwF8tic0lb-0)
+- [geeksforgeeks](https://www.geeksforgeeks.org/)
+    -[Python | datetime.timedelta() function](https://www.geeksforgeeks.org/python-datetime-timedelta-function/)
 - [GitHub](https://github.com/)
     - [Replicate Python client](https://github.com/replicate/replicate-python#readme)
 - [iStock](https://www.istockphoto.com/es)

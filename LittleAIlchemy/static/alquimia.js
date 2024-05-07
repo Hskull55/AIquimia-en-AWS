@@ -119,8 +119,23 @@ function combinar() {
     document.getElementById('formCombinar').submit();
 }
 
-// Alert para informar de la creación de un nuevo elemento / Error
+//Función que muestra el tutorial
+function mostrarTutorial() {
+    swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this imaginary file!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+     });
+}
+
+// Alert para informar de la creación de un nuevo elemento / Error + tutorial
 window.onload = function () {
+    var tutorial = document.getElementById('tutorial').innerText;
+    if (tutorial == "True") {
+        mostrarTutorial();
+    }
     var nuevoElemento = document.getElementById('nuevoElemento').innerText;
     var descripcion = document.getElementById('descripcion').innerText;
     var descubiertoPor = document.getElementById('descubiertoPor').innerText;
