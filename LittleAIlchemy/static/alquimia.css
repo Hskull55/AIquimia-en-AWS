@@ -212,11 +212,11 @@ button:hover {
     font-size: smaller;
 }
 
-.elemento:hover{
+.elemento:hover {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 }
 
-.descubrimiento:hover{
+.descubrimiento:hover {
     box-shadow: 0 0 15px 3px rgba(128, 0, 128, 0.8);
 }
 
@@ -229,7 +229,12 @@ button:hover {
     align-items:center;
 }
 
-.vacio .elemento:hover{
+.vacio .elemento {
+    width: 125px;
+    height: 125px;
+}
+
+.vacio .elemento:hover {
     box-shadow: 0 0 0px rgba(0, 0, 0, 0);
 }
 
@@ -284,6 +289,11 @@ button:hover {
 
 .swal-overlay--show-modal .swal-modal.destelloShiny {
     animation: destelloShiny 2s infinite linear;
+}
+
+.swal-footer {
+    display:flex;
+    justify-content: center;
 }
 
 .swal-button-container {

@@ -4,6 +4,8 @@ Estamos trabajando en ello...
 ## Páginas y recuros consultados para la realización de este proyecto:
 
 - [Bootstrap](https://icons.getbootstrap.com/)
+- [Canva](https://www.canva.com/)
+    - [Free GIF Maker](https://www.canva.com/create/gif-maker/)
 - [ChatGPT](https://chat.openai.com/)
 - [CODEDEC](https://codedec.com/)
     - [How to create login and registration in Django](https://codedec.com/tutorials/how-to-create-login-and-registration-in-django/)
@@ -56,6 +58,7 @@ Estamos trabajando en ello...
     - [How to specify the login_required redirect url in django?](https://stackoverflow.com/questions/3578882/how-to-specify-the-login-required-redirect-url-in-django)
     - [Using LoginView and LogoutView with custom templatesUsing LoginView and LogoutView with custom templates](https://stackoverflow.com/questions/59692899/using-loginview-and-logoutview-with-custom-templates)
     - [Adding class to sweet alert](https://stackoverflow.com/questions/48985966/adding-class-to-sweet-alert)
+    - [How to force desktop view on mobile devices?](https://stackoverflow.com/questions/31334481/how-to-force-desktop-view-on-mobile-devices)
 - [SweetAlert](https://sweetalert.js.org/)
     - [Installation guide](https://sweetalert.js.org/guides/)
 - [TECHSTACKER](https://techstacker.com/)

@@ -121,13 +121,27 @@ function combinar() {
 
 //Función que muestra el tutorial
 function mostrarTutorial() {
-    swal({
-        title: "Are you sure?",
-        text: "Once deleted, you will not be able to recover this imaginary file!",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-     });
+    swal("A wild Pikachu appeared! What do you want to do?", {
+        buttons: {
+            Exit: true,
+            Next: {
+                text: "Next",
+                value: "Next",
+            },
+        },
+        closeOnClickOutside: false,
+        icon: "https://media.tenor.com/8a-TVt_IRfoAAAAi/fortnite-dance-fortnite.gif"
+//        icon: "../static/imagenes/elementos/Fire.png"
+    })
+    .then((value) => {
+        switch (value) {
+            case "Exit":
+                break;
+            case "Next":
+                swal("Gotcha!", "Pikachu was caught!", "success");
+                break;
+        }
+    });
 }
 
 // Alert para informar de la creación de un nuevo elemento / Error + tutorial
