@@ -1,5 +1,4 @@
 // JavaScript para el juego
-
 const elementos = document.querySelectorAll('.elemento');
 const contenedores = document.querySelectorAll('.vacio');
 
@@ -121,25 +120,81 @@ function combinar() {
 
 //Función que muestra el tutorial
 function mostrarTutorial() {
-    swal("A wild Pikachu appeared! What do you want to do?", {
-        buttons: {
-            Exit: true,
-            Next: {
-                text: "Next",
-                value: "Next",
+    // En este array guardamos los mensajes del tutorial para que tengan un índice
+    const textoTutorial = [
+        "On your right you can find your element collection. Elements are your main and only resource in this game, and your goal is to create as many different ones as possible.",
+        "On the right side you will find your alchemy table. You will need to place two elements here if you wish to combine them.",
+        "To add an element to your alchemy table, you can either drag it or click on it. The choice is yours, sorcerer.",
+        "Once you have added two elements to the alchemy table, you will need to click on the combine button and wait a few seconds.",
+        "If you made a mistake or came up with a better combination, you can delete individual elements from the alchemy table by clicking on them. You can also clear both elements at once by clicking on the red button.",
+        "The navigation bar at the bottom will allow you to return to the main screen, check the sorcerer leaderboard, log out of your account or repeat this tutorial (?).",
+        "At some point, your collection will be too powerful to handle. When that happens, you can use the search bar on top of your elements to search for them by name."
+    ];
+
+    // Necesitamos un contador para mostrar las páginas del tutorial
+    var tutorialActual = 0;
+
+    // Mostramos el tutorial
+    function mostrarPaginas() {
+        swal({
+            text: textoTutorial[tutorialActual],
+            buttons: {
+                //Exit: true,
+                Back: {
+                    text: "Back",
+                    value: "Back",
+                },
+                Next: {
+                    text: "Next",
+                    value: "Next",
+                },
             },
+            closeOnClickOutside: false,
+            icon: `../static/imagenes/tutorial/Tutorial${tutorialActual + 1}.png`
+        })
+        .then((value) => {
+            switch (value) {
+                //case "Exit":
+                    //break;
+                case "Next":
+                    tutorialActual++;
+                    if (tutorialActual < textoTutorial.length) {
+                        mostrarPaginas();
+                    } else {
+                        swal("Tutorial completed", "That is all you need to know about Aiquimia. Start creating new elements and prove your worth, young sorcerer", "../static/imagenes/Thalasor.png");
+                    }
+                    break;
+                case "Back":
+                    if (tutorialActual > 0) {
+                        tutorialActual--;
+                        mostrarPaginas();
+                    }
+                    break;
+            }
+        });
+    }
+
+    swal({
+        title: "Tutorial",
+        text: "Greetings, young sorcerer. My name is Thalasor. I am the Arch-Mage of Arstotzka. Do you want me to teach you how to play Aiquimia?",
+        buttons: {
+            No: {
+                text: "No",
+                value: false,
+            },
+            Yes: {
+                text: "Yes",
+                value: true,
+            }
         },
         closeOnClickOutside: false,
-        icon: "https://media.tenor.com/8a-TVt_IRfoAAAAi/fortnite-dance-fortnite.gif"
-//        icon: "../static/imagenes/elementos/Fire.png"
+        icon: "../static/imagenes/Thalasor.png"
     })
     .then((value) => {
-        switch (value) {
-            case "Exit":
-                break;
-            case "Next":
-                swal("Gotcha!", "Pikachu was caught!", "success");
-                break;
+        if (value) {
+            mostrarPaginas();
+        } else {
+            swal("Tutorial skipped", "Very well then. I will leave you alone, young sorcerer. If you ever need my help, click on the (?) button. Farewell.", "../static/imagenes/Thalasor.png");
         }
     });
 }
