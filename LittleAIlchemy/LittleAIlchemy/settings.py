@@ -83,10 +83,10 @@ WSGI_APPLICATION = 'LittleAIlchemy.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pruebas',
+        'NAME': 'aiquimia',
 	'USER': 'admin',
-	'PASSWORD': 'admin',
-	'HOST': '127.0.0.1',
+	'PASSWORD': '123456Aa',
+	'HOST': 'database-1.ctgdefdtrckg.us-east-1.rds.amazonaws.com',
 	'PORT': '3306',
     }
 }
