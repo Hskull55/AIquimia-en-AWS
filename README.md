@@ -3,6 +3,9 @@ Estamos trabajando en ello...
 
 ## Páginas y recuros consultados para la realización de este proyecto:
 
+- [AWS](https://aws.amazon.com/es/)
+    - [Connecting to a DB instance running the MariaDB database engine](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ConnectToMariaDBInstance.html)
+    - [Connect to the internet using an internet gateway](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html#attach-igw)
 - [Bootstrap](https://icons.getbootstrap.com/)
 - [Canva](https://www.canva.com/)
     - [Free GIF Maker](https://www.canva.com/create/gif-maker/)
@@ -29,6 +32,8 @@ Estamos trabajando en ello...
 - [JavaScript Tutorial](https://www.javascripttutorial.net)
     - [JavaScript Anonymous Functions](https://www.javascripttutorial.net/javascript-anonymous-functions/)
 - [JSDELIVR](https://www.jsdelivr.com/)
+- [Linuxize](https://linuxize.com/)
+    - [How to Set or Change Timezone on Debian 10](https://linuxize.com/post/how-to-set-or-change-timezone-on-debian-10/#:~:text=To%20change%20your%20Debian%20system%E2%80%99s%20timezone%2C%20run%20the,of%20the%20time%20zone%20you%20want%20to%20set.)
 - [MDN Web Docs](https://developer.mozilla.org/es)
     - [Modelo de Objetos del Documento (DOM)](https://developer.mozilla.org/es/docs/Web/API/Document_Object_Model)
     - [Document: DOMContentLoaded event](https://developer.mozilla.org/en-US/docs/Web/API/Document/DOMContentLoaded_event)
@@ -59,6 +64,7 @@ Estamos trabajando en ello...
     - [Using LoginView and LogoutView with custom templatesUsing LoginView and LogoutView with custom templates](https://stackoverflow.com/questions/59692899/using-loginview-and-logoutview-with-custom-templates)
     - [Adding class to sweet alert](https://stackoverflow.com/questions/48985966/adding-class-to-sweet-alert)
     - [How to force desktop view on mobile devices?](https://stackoverflow.com/questions/31334481/how-to-force-desktop-view-on-mobile-devices)
+    - [How can I move EC2 instances to a different subnet?](https://stackoverflow.com/questions/20236469/how-can-i-move-ec2-instances-to-a-different-subnet)
 - [SweetAlert](https://sweetalert.js.org/)
     - [Installation guide](https://sweetalert.js.org/guides/)
 - [TECHSTACKER](https://techstacker.com/)
