@@ -1,4 +1,5 @@
 #!/bin/bash
+# Script backup.sh para la instancia EC2 encargada de las copias de seguridad y logs (172.31.0.69)
 
 HOST="database-1.ctgdefdtrckg.us-east-1.rds.amazonaws.com"
 USUARIO="admin"
