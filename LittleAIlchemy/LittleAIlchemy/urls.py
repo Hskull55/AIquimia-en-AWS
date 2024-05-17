@@ -29,6 +29,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 ]
 
+handler404 = 'LittleAIlchemy.views.custom404'
+
 #urlpatterns = [
 #    path('admin/', admin.site.urls),
 #]

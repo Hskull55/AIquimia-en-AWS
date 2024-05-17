@@ -234,3 +234,8 @@ def registro(request):
 def vistaLogout(request):
     logout(request)
     return redirect('/login/')
+
+
+# 404 Personalizado
+def custom404(request, exception):
+    return render(request, '404.html', status=404)

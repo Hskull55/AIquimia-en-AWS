@@ -24,8 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-!bw*-vklu$k-l#rt+7en3o$w*+h6q^$=f+*qkah#9poqb+g=&0'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# SECURITY WARNING: don't run with debug turned on in production! --> Debí haber leído esto antes :)
+# Usar esto: python3 manage.py runserver --insecure 0.0.0.0:8000
+DEBUG = False
 
 ALLOWED_HOSTS = ['44.222.23.204', 'aiquimia.mooo.com']
 
