@@ -26,6 +26,7 @@ urlpatterns = [
     path('signup/', views.registro, name='registro'),
     path('', login_required(inicio), name='inicio'),
     path('alquimia/', views.alquimia, name='alquimia'),
+    path('challenge/', views.desafio, name='challenge'),
     path('admin/', admin.site.urls),
 ]
 

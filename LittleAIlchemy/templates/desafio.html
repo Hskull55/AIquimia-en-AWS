@@ -4,11 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1024">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-    <title>AIquimia</title>
+    <title>AIquimia - Challenge mode</title>
     {% load static %} <!-- Cargar archivos estáticos -->
     <!-- Biblioteca SweetAlert para alert personalizado -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert"></script>
     <script src="{% static 'alquimia.js' %}" defer></script> <!-- JavaScript-->
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'imagenes/favicon.ico' %}"> <!-- Favicon -->
     <link rel="stylesheet" href="{% static 'alquimia.css' %}"> <!-- CSS principal -->
@@ -25,29 +24,14 @@
     <div id="imagenSwal" style="display: none;">{{ imagen }}</div>
     <div id="usuario" style="display: none;">{{ usuario }}</div>
     <div id="tutorial" style="display: none;">{{ tutorial }}</div>
-    <!-- Recorremos la lista top de views.py y añadimos sus valores -->
-    <div id="puntuacion" style="display: none;">
-        <div>
-            {% for usuario, descubrimientos in top %}
-                {{ usuario }}: {{ descubrimientos }}<br>
-            {% endfor %}
-        </div>
-    </div>
     <div class="contenedorAlquimia">
-        <!-- Zona para combinar los elementos -->
         <div class="izquierda">
-            <div class="info"> 
-                <span class="pLogin"><i class="bi bi-person-circle"></i> You are currently logged in as <span class="infoText">{{ user.username }}</span></span>
-                <span><i class="bi bi-arrows-angle-contract"></i> You have discovered <span class="infoText">{{ contadorCombinaciones }}</span> different combinations</span>
-                <span><i class="bi bi-search"></i> You have created <span class="infoText">{{ contadorElementos }}</span> elements</span>
-            </div>
             <div class="zonaCombinar">
                 <div class="superior">
                     <div class="vacio contenedor"></div>
                     <div class="math">+</div>
                     <div class="vacio contenedor"></div>
                 </div>
-	        <!-- Formulario que envía los elementos a combinar -->
                 <form id="formCombinar" action="" method="post">{% csrf_token %}
                     <input type="hidden" name="elementoId[]" id="hidden1">
                     <input type="hidden" name="elementoId[]" id="hidden2">
@@ -55,42 +39,40 @@
                     <button type="button" onclick="despejar()" id="limpiar"><i class="bi bi-trash"></i></button>
                 </form>
             </div>
-        </div>     
-        <!-- Zona que contiene los elementos del usuario -->
+        </div>
         <div class="derecha">
             <div id="buscar">
-                <input type="text" id="busqueda" placeholder="Search an element by name">
+                <input type="text" id="busqueda" placeholder="Buscar un elemento por nombre">
             </div>
             <div class="contenedorElementos contenedor">
-                <!-- Bucle que muestra todos los elementos de la base de datos -->
-		{% for elemento in listaElementos %}
+                {% for elemento in listaElementos %}
                     <div id="{{ elemento.id }}" class="elemento {% if elemento.descubiertoPor == request.user.username %}descubrimiento{% endif %}" style="background-image: url(../static/imagenes/elementos/{{elemento.imagen}})" draggable="true">{{ elemento.nombre }}</div>
-                {% endfor %}            
+                {% endfor %}
             </div>
         </div>
     </div>
+
     <!-- Barra de navegación inferior -->
     <div class="nav">
         <div id="botones">
             <!-- Si no ponía un formulario para enviarlo mediante POST, me daba un error al cerrar sesión-->
             <button class="inicio destello" onclick="window.location.href='/'">Return <i class="bi bi-house"></i></button>
             <button onclick="mostrarTutorial()"><i class="bi bi-question-circle"></i></button>
-            <button onclick="window.location.href='/challenge'">Challenge mode <i class="bi bi-toggle-off"></i></button>
-            <button onclick="puntuacion()" class="marcador">Leaderboard <i class="bi bi-trophy"></i></button>
+            <button onclick="window.location.href='/alquimia'">Challenge mode <i class="bi bi-toggle-on"></i></button>
             <form action="/logout/" method="post">
                 {% csrf_token %}
                 <button type="submit">Log out <i class="bi bi-x-square"></i></button>
             </form>
         </div>
     </div>
-    
+
 
     {% if error %}
         <div id="error" style="display: none;">
             {{ error }}
         </div>
     {% endif %}
-
+    
 </body>
 
 </html>

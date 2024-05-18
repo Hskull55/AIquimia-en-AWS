@@ -1,4 +1,4 @@
-@media only screen and (max-width: 680px), (max-height: 400px){
+@media only screen and (max-width: 720px), (max-height: 400px){
     body *, .contenedorAlquimia, .nav {
         display: none; 
     }
@@ -11,6 +11,12 @@
 
 @media only screen and (max-height: 500px){
     .info {
+        display:none;
+    }
+}
+
+@media only screen and (max-width: 930px){
+    .marcador {
         display:none;
     }
 }
