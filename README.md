@@ -13,6 +13,7 @@ Estamos trabajando en ello...
 - [CODEDEC](https://codedec.com/)
     - [How to create login and registration in Django](https://codedec.com/tutorials/how-to-create-login-and-registration-in-django/)
     - [User Login and Logout in Django](https://codedec.com/tutorials/user-login-and-logout-in-django/)
+- Copilot --> Configuración de logging
 - [DigitalOcean](https://www.digitalocean.com/)
     - [How To Use MySQL or MariaDB with your Django Application on Ubuntu 14.04](https://www.digitalocean.com/community/tutorials/how-to-use-mysql-or-mariadb-with-your-django-application-on-ubuntu-14-04)
     - [How To Configure Nginx to Use Custom Error Pages](https://www.digitalocean.com/community/tutorial-collections/how-to-configure-nginx-to-use-custom-error-pages)
@@ -35,7 +36,7 @@ Estamos trabajando en ello...
 - [JSDELIVR](https://www.jsdelivr.com/)
 - [Linuxize](https://linuxize.com/)
     - [How to Set or Change Timezone on Debian 10](https://linuxize.com/post/how-to-set-or-change-timezone-on-debian-10/#:~:text=To%20change%20your%20Debian%20system%E2%80%99s%20timezone%2C%20run%20the,of%20the%20time%20zone%20you%20want%20to%20set.)
-- [MAKEUSOF](https://www.makeuseof.com/)
+- [MAKEUSEOF](https://www.makeuseof.com/)
     - [How to Create a Custom 404 Error Page in Django](https://www.makeuseof.com/create-custom-404-error-page-django/)
 - [MDN Web Docs](https://developer.mozilla.org/es)
     - [Modelo de Objetos del Documento (DOM)](https://developer.mozilla.org/es/docs/Web/API/Document_Object_Model)

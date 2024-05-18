@@ -143,3 +143,24 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/login/'
 
+
+# Configuración de los logs
+
+LOGGING = {
+    'version': 1,
+    # Deshabilitamos los logs por defecto de django
+    'disable_existing_loggers': True,
+    # Guardaremos los datos en el fichero aiquimia.log (todos los niveles de log)
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'aiquimia.log'),
+        },
+    },
+    # Utilizamos el handler "file" que definimos antes para que el logger raíz guarde en el archivo los registros
+    'root': {
+        'handlers': ['file'],
+        'level': 'DEBUG',
+    },
+}

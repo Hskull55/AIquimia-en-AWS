@@ -1,4 +1,4 @@
-import os, datetime, replicate
+import os, datetime, replicate, logging
 from collections import Counter
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -8,6 +8,8 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from .models import dbElementos, dbCombinaciones
 from .forms import FormRegistro
+
+logger = logging.getLogger()
 
 @login_required
 @csrf_protect
@@ -27,6 +29,7 @@ def alquimia(request):
     usuario = request.user
 
     if request.method == 'POST':
+        logger.error("TEST - {}".format(usuario))
         # Asignamos los ids de los elementos a una variable
         elementoId1 = request.POST.getlist('elementoId[]')[0]
         elementoId2 = request.POST.getlist('elementoId[]')[1]
@@ -37,6 +40,7 @@ def alquimia(request):
 
         elemento1 = dbElementos.objects.filter(id=elementoId1).first()
         elemento2 = dbElementos.objects.filter(id=elementoId2).first()
+        logger.info("{} ha combinado {} y {}".format(usuario, elemento1, elemento2))
 
         # Verificamos si la combinación ya existe en la base de datos
         combinacionExistenteA = dbCombinaciones.objects.filter(elemento1=elemento1, elemento2=elemento2).first()
@@ -142,6 +146,7 @@ def alquimia(request):
             rutaImagen = os.path.join("static/imagenes/elementos/", imagen)
             if not os.path.exists(rutaImagen):
                 imagen = elemento1.imagen
+                logger.error("La imagen {} no existe".format(rutaImagen))
 
             # Guardamos la combinación en la base de datos si se ha generado correctamente un resultado
             if resultadoCombinacion and len(resultadoCombinacion.split()) == 1:
@@ -168,7 +173,7 @@ def alquimia(request):
             # Este error se mostrará en un alert si la IA devuelve más de una palabra
             else:
                 error = "Something went wrong. Try again later"
-
+                logger.error("No se generó un elemento")
     # Sin flat=True los nombres no salen bien
     contadorDescubrimientos = Counter(dbElementos.objects.values_list('descubiertoPor', flat=True))
     # Solo pillamos a los 10 primeros
