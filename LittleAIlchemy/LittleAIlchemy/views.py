@@ -214,6 +214,7 @@ def desafio(request):
     imagen = None
     descubiertoPor= None
     usuario = User.objects.get(username='Challenger')
+    nombreElementoAleatorio = None
 
     if request.method == 'POST':
         logger.error("TEST - {}".format(usuario))
@@ -381,7 +382,17 @@ def desafio(request):
         return response
     else:
         # Si la cookie ya existe, solamente cargamos la página
-        return render(request, 'desafio.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen, 'descubiertoPor':descubiertoPor, 'top':top, 'contadorElementos':contadorElementos, 'contadorCombinaciones':contadorCombinaciones, 'usuario':usuario, 'tutorial': False})
+        response = HttpResponse(render(request, 'desafio.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen, 'descubiertoPor':descubiertoPor, 'top':top, 'contadorElementos':contadorElementos, 'contadorCombinaciones':contadorCombinaciones, 'usuario':usuario, 'tutorial': False}))
+
+    # Esta cookie guarda el elemento aleatorio actual
+    if not request.COOKIES.get('elementoAleatorio'):
+        elementoAleatorio = random.choice(listaElementos)
+        nombreElementoAleatorio = elementoAleatorio.nombre
+        response.set_cookie('elementoAleatorio', nombreElementoAleatorio)
+    else:
+        nombreElementoAleatorio = request.COOKIES.get('elementoAleatorio')
+
+    return response
 
 # Renderizamos la página de inicio
 @login_required
