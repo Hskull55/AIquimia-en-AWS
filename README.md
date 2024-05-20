@@ -22,6 +22,8 @@ Estamos trabajando en ello...
     - [Using the Django authentication system](https://docs.djangoproject.com/en/5.0/topics/auth/default/)
     - [Settings](https://docs.djangoproject.com/en/dev/ref/settings/)
     - [Many-to-many relationships](https://docs.djangoproject.com/en/5.0/topics/db/examples/many_to_many/)
+    - [Making queries](https://docs.djangoproject.com/en/5.0/topics/db/queries/)
+        - [Complex lookups with Q objects](https://docs.djangoproject.com/en/5.0/topics/db/queries/#complex-lookups-with-q-objects)
 - [Figma](figma.com)
     - [Free Emoji Pack](https://www.figma.com/file/OdVPE3ESsulyRzomUlGeB6/Free-Emoji-Pack-(Community)?type=design&node-id=0-1&mode=design&t=hQgmA9QwF8tic0lb-0)
 - [geeksforgeeks](https://www.geeksforgeeks.org/)

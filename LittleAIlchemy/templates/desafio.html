@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1024">
-    <title>AIquimia - Challenge mode</title>
+    <title>AIquimia - Challenge mode: {{ nombreElementoAleatorio }}</title>
     {% load static %} <!-- Cargar archivos estáticos -->
     <!-- Biblioteca SweetAlert para alert personalizado -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert"></script>
@@ -24,9 +24,17 @@
     <div id="imagenSwal" style="display: none;">{{ imagen }}</div>
     <div id="usuario" style="display: none;">{{ usuario }}</div>
     <div id="tutorial" style="display: none;">{{ tutorial }}</div>
+    <div id="victoria" style="display: none;">{{ victoria }}</div>
     <div class="contenedorAlquimia">
         <div class="izquierda">
             <div class="zonaCombinar">
+                <div class="contenedorDesafio">
+                    <div class="contenedorDesafio2">
+                        <div>Your goal is to create the element {{ nombreElementoAleatorio }}</div>
+                        <div>You have failed to do so {{ contador }} times so far</div>
+                    </div>
+                    <div><img class="imagenRandom" src="../static/imagenes/elementos/{{ imagenElementoAleatorio }}"></div>
+                </div>
                 <div class="superior">
                     <div class="vacio contenedor"></div>
                     <div class="math">+</div>
@@ -42,7 +50,7 @@
         </div>
         <div class="derecha">
             <div id="buscar">
-                <input type="text" id="busqueda" placeholder="Buscar un elemento por nombre">
+                <input type="text" id="busqueda" placeholder="Search an element by name">
             </div>
             <div class="contenedorElementos contenedor">
                 {% for elemento in listaElementos %}

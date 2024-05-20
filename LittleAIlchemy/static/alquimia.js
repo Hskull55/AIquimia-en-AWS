@@ -210,11 +210,19 @@ window.onload = function () {
     var descubiertoPor = document.getElementById('descubiertoPor').innerText;
     var imagen = document.getElementById('imagenSwal').innerText;
     var usuario = document.getElementById('usuario').innerText;
+    var victoria = document.getElementById('victoria').innerText;
 
     // Si el usuario actual descubió el elemento, cambiamos el color del destello
     var tipoDestello = usuario == descubiertoPor ? "destelloShiny" : "destello"; 
 
-    if (nuevoElemento !== "None") {
+    // Aquí miramos si el usuario ha ganado (modo desafío) para mostrar ese mensaje en vez del normal
+    if (victoria) {
+        swal("You did it!", "His majesty is pleased", {
+            button: "Glory to Arstotzka",
+            icon: "../static/imagenes/elementos/" + imagen,
+            className: tipoDestello
+        });
+    } else if (nuevoElemento !== "None") {
         swal("You have created " + nuevoElemento, descripcion, {
             button: "That's rad.",
             icon: "../static/imagenes/elementos/" + imagen,
@@ -275,4 +283,3 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-

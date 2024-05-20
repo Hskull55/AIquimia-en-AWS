@@ -1,4 +1,5 @@
 import os, datetime, replicate, logging, random
+from django.db.models import Q
 from collections import Counter
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -205,8 +206,10 @@ def desafio(request):
     elementosCreados = request.user.elementosCreados.all()
     # Obtenemos los elementos con IDs 1, 2, 3 y 4; que son Agua, Aire, Tierra y Fuego
     elementosBasicos = dbElementos.objects.filter(id__in=[1, 2, 3, 4])
-    # Mostramos los elementos del jugador
+    # Seleccionamos todos los elementos existentes en la base de datos
     listaElementos = dbElementos.objects.all().order_by('nombre')
+    # Excluimos los elemenetos básicos de la lista de posibles elementos aleatorios
+    elementosNoBasicos = listaElementos.exclude(Q(nombre='Water') | Q(nombre='Air') | Q(nombre='Fire') | Q(nombre='Earth'))
     # Inicializamos varias varibales sin valor para evitar errores al cargar la página
     nuevoElemento = None
     error = None
@@ -215,6 +218,7 @@ def desafio(request):
     descubiertoPor= None
     usuario = User.objects.get(username='Challenger')
     nombreElementoAleatorio = None
+    victoria = False
 
     if request.method == 'POST':
         logger.error("TEST - {}".format(usuario))
@@ -362,35 +366,47 @@ def desafio(request):
             else:
                 error = "Something went wrong. Try again later"
                 logger.error("No se generó un elemento")
-    # Sin flat=True los nombres no salen bien
-    contadorDescubrimientos = Counter(dbElementos.objects.values_list('descubiertoPor', flat=True))
-    # Solo pillamos a los 10 primeros
-    top = contadorDescubrimientos.most_common(10)
-    # Contamos cuantos elementos y combinaciones ha creado el usuario (Total, no descubierto)
-    contadorElementos = dbElementos.objects.filter(creadores=request.user).count()
-    contadorCombinaciones = dbCombinaciones.objects.filter(creadoresC=request.user).count()
     if nuevoElemento:
         imagen = nuevoElemento.imagen
-    #return render(request, 'alquimia.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen, 'descubiertoPor':descubiertoPor, 'top':top, 'contadorElementos':contadorElementos, 'contadorCombinaciones':contadorCombinaciones, 'usuario':usuario})
-    # Aquí usamos una cookie para ver si es la primera vez que un usuario entra al juego
-    tutorialHecho = request.COOKIES.get('tutorialHecho')
-    if tutorialHecho != 'true':
-        # Si la cookie está en "false" o no existe, cargamos la página y la creamos
-        response = HttpResponse(render(request, 'desafio.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen, 'descubiertoPor':descubiertoPor, 'top':top, 'contadorElementos':contadorElementos, 'contadorCombinaciones':contadorCombinaciones, 'usuario':usuario, 'tutorial': True}))
-        expiracion = datetime.datetime.now() + datetime.timedelta(days=365)
-        response.set_cookie('tutorialHecho', 'true', expires=expiracion)
-        return response
-    else:
-        # Si la cookie ya existe, solamente cargamos la página
-        response = HttpResponse(render(request, 'desafio.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen, 'descubiertoPor':descubiertoPor, 'top':top, 'contadorElementos':contadorElementos, 'contadorCombinaciones':contadorCombinaciones, 'usuario':usuario, 'tutorial': False}))
+
+    contador = int(request.COOKIES.get('contador', 0))
+    contador += 1
+
+    response = HttpResponse(render(request, 'desafio.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen, 'descubiertoPor':descubiertoPor, 'usuario':usuario, 'tutorial': False, 'contador':contador}))
 
     # Esta cookie guarda el elemento aleatorio actual
     if not request.COOKIES.get('elementoAleatorio'):
-        elementoAleatorio = random.choice(listaElementos)
+        elementoAleatorio = random.choice(elementosNoBasicos)
         nombreElementoAleatorio = elementoAleatorio.nombre
+        imagenElementoAleatorio = elementoAleatorio.imagen
+        response = HttpResponse(render(request, 'desafio.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen, 'descubiertoPor':descubiertoPor, 'usuario':usuario, 'tutorial': False, 'nombreElementoAleatorio':nombreElementoAleatorio, 'imagenElementoAleatorio':imagenElementoAleatorio, 'contador':contador}))
         response.set_cookie('elementoAleatorio', nombreElementoAleatorio)
     else:
         nombreElementoAleatorio = request.COOKIES.get('elementoAleatorio')
+        elementoAleatorio = dbElementos.objects.get(nombre=nombreElementoAleatorio)
+        imagenElementoAleatorio = elementoAleatorio.imagen
+        response = HttpResponse(render(request, 'desafio.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen, 'descubiertoPor':descubiertoPor, 'usuario':usuario, 'tutorial': False, 'nombreElementoAleatorio':nombreElementoAleatorio, 'imagenElementoAleatorio':imagenElementoAleatorio, 'contador':contador}))
+
+    # Si consigues crear el elemento aleatorio, ganas
+    if nuevoElemento and nuevoElemento.nombre == nombreElementoAleatorio:
+        print("¡Has ganado!")
+        # Borramos las cookies al ganar para que puedas jugar otra partida
+        response.delete_cookie('contador')
+        response.delete_cookie('elementoAleatorio')
+        elementoAleatorio = random.choice(elementosNoBasicos)
+        nombreElementoAleatorio = elementoAleatorio.nombre
+        imagenElementoAleatorio = elementoAleatorio.imagen
+        contador = 0
+        victoria = True
+        response = HttpResponse(render(request, 'desafio.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen, 'descubiertoPor':descubiertoPor, 'usuario':usuario, 'tutorial': False, 'nombreElementoAleatorio':nombreElementoAleatorio, 'imagenElementoAleatorio':imagenElementoAleatorio, 'contador':contador, 'victoria':victoria}))
+        response.set_cookie('elementoAleatorio', nombreElementoAleatorio)
+        response.set_cookie('contador', contador)
+    # Si no, se añade 1 a tu contador
+    else:
+        #contador += 1
+        print(":(")
+
+    response.set_cookie('contador', contador)
 
     return response
 

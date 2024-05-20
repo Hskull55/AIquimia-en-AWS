@@ -199,9 +199,10 @@ button:hover {
     width: 100px;
     height: 100px;
     background-color: #E8CDAF;
+    background-size: cover;
     border: 2px solid #3E2717;
     margin: 5px; 
-    line-height: 100px;
+    line-height: 175px;
     text-align: center;
     cursor: grab;
     font-weight: bold;
@@ -218,6 +219,27 @@ button:hover {
 
 .descubrimiento:hover {
     box-shadow: 0 0 15px 3px rgba(128, 0, 128, 0.8);
+}
+
+.contenedorDesafio {
+    background: rgba(248, 197, 144, 0.7);
+    border: 4px solid #3E2719;
+    margin: 10px;
+    padding: 15px;
+    display: flex;
+}
+
+.contenedorDesafio2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-right: 10px;
+}
+
+.imagenRandom {
+    width: 100px;
+    height: 100px;
 }
 
 .vacio {
