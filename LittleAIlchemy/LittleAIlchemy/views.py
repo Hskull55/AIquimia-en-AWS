@@ -16,6 +16,7 @@ logger = logging.getLogger()
 @login_required
 @csrf_protect
 def alquimia(request):
+    fecha = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     # Obtenemos los elementos creados por el usuario actual
     elementosCreados = request.user.elementosCreados.all()
     # Obtenemos los elementos con IDs 1, 2, 3 y 4; que son Agua, Aire, Tierra y Fuego
@@ -31,7 +32,6 @@ def alquimia(request):
     usuario = request.user
 
     if request.method == 'POST':
-        logger.error("TEST - {}".format(usuario))
         # Asignamos los ids de los elementos a una variable
         elementoId1 = request.POST.getlist('elementoId[]')[0]
         elementoId2 = request.POST.getlist('elementoId[]')[1]
@@ -42,7 +42,7 @@ def alquimia(request):
 
         elemento1 = dbElementos.objects.filter(id=elementoId1).first()
         elemento2 = dbElementos.objects.filter(id=elementoId2).first()
-        logger.info("{} ha combinado {} y {}".format(usuario, elemento1, elemento2))
+        logger.info("{}: {} ha combinado {} y {}".format(fecha, usuario, elemento1, elemento2))
 
         # Verificamos si la combinación ya existe en la base de datos
         combinacionExistenteA = dbCombinaciones.objects.filter(elemento1=elemento1, elemento2=elemento2).first()
@@ -148,7 +148,7 @@ def alquimia(request):
             rutaImagen = os.path.join("static/imagenes/elementos/", imagen)
             if not os.path.exists(rutaImagen):
                 imagen = elemento1.imagen
-                logger.error("La imagen {} no existe".format(rutaImagen))
+                logger.error("{}: La imagen {} no existe".format(fecha, rutaImagen))
 
             # Guardamos la combinación en la base de datos si se ha generado correctamente un resultado
             if resultadoCombinacion and len(resultadoCombinacion.split()) == 1:
@@ -160,6 +160,7 @@ def alquimia(request):
                     descubiertoPor = request.user
                     nuevoElemento = dbElementos(nombre=resultadoCombinacion, descripcion=descripcion, imagen=imagen, descubiertoPor=descubiertoPor)
                     nuevoElemento.save()
+                    logger.info("{}: {} ha descubierto el elemento {}".format(fecha, usuario, nuevoElemento))
                 else:
                     descubiertoPor = dbElementos.objects.get(nombre=elementoExistente).descubiertoPor
                     nuevoElemento = dbElementos(nombre=resultadoCombinacion, descripcion=descripcion, imagen=imagen, descubiertoPor=descubiertoPor)
@@ -175,7 +176,7 @@ def alquimia(request):
             # Este error se mostrará en un alert si la IA devuelve más de una palabra
             else:
                 error = "Something went wrong. Try again later"
-                logger.error("No se generó un elemento")
+                logger.error("{}: No se generó un elemento".format(fecha))
     # Sin flat=True los nombres no salen bien
     contadorDescubrimientos = Counter(dbElementos.objects.values_list('descubiertoPor', flat=True))
     # Solo pillamos a los 10 primeros
@@ -202,6 +203,7 @@ def alquimia(request):
 @login_required
 @csrf_protect
 def desafio(request):
+    fecha = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     # Obtenemos los elementos creados por el usuario actual
     elementosCreados = request.user.elementosCreados.all()
     # Obtenemos los elementos con IDs 1, 2, 3 y 4; que son Agua, Aire, Tierra y Fuego
@@ -221,7 +223,6 @@ def desafio(request):
     victoria = False
 
     if request.method == 'POST':
-        logger.error("TEST - {}".format(usuario))
         # Asignamos los ids de los elementos a una variable
         elementoId1 = request.POST.getlist('elementoId[]')[0]
         elementoId2 = request.POST.getlist('elementoId[]')[1]
@@ -232,7 +233,7 @@ def desafio(request):
 
         elemento1 = dbElementos.objects.filter(id=elementoId1).first()
         elemento2 = dbElementos.objects.filter(id=elementoId2).first()
-        logger.info("{} ha combinado {} y {}".format(usuario, elemento1, elemento2))
+        logger.info("{}: {} ha combinado {} y {}".format(fecha, usuario, elemento1, elemento2))
 
         # Verificamos si la combinación ya existe en la base de datos
         combinacionExistenteA = dbCombinaciones.objects.filter(elemento1=elemento1, elemento2=elemento2).first()
@@ -338,7 +339,7 @@ def desafio(request):
             rutaImagen = os.path.join("static/imagenes/elementos/", imagen)
             if not os.path.exists(rutaImagen):
                 imagen = elemento1.imagen
-                logger.error("La imagen {} no existe".format(rutaImagen))
+                logger.error("{}: La imagen {} no existe".format(fecha, rutaImagen))
 
             # Guardamos la combinación en la base de datos si se ha generado correctamente un resultado
             if resultadoCombinacion and len(resultadoCombinacion.split()) == 1:
@@ -350,6 +351,7 @@ def desafio(request):
                     descubiertoPor = usuario
                     nuevoElemento = dbElementos(nombre=resultadoCombinacion, descripcion=descripcion, imagen=imagen, descubiertoPor=descubiertoPor)
                     nuevoElemento.save()
+                    logger.info("{}: {} ha descubierto el elemento {}".format(fecha, usuario, nuevoElemento))
                 else:
                     descubiertoPor = dbElementos.objects.get(nombre=elementoExistente).descubiertoPor
                     nuevoElemento = dbElementos(nombre=resultadoCombinacion, descripcion=descripcion, imagen=imagen, descubiertoPor=descubiertoPor)
@@ -365,7 +367,7 @@ def desafio(request):
             # Este error se mostrará en un alert si la IA devuelve más de una palabra
             else:
                 error = "Something went wrong. Try again later"
-                logger.error("No se generó un elemento")
+                logger.error("{}: No se generó un elemento".format(fecha))
     if nuevoElemento:
         imagen = nuevoElemento.imagen
 
