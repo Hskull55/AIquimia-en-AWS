@@ -10,7 +10,7 @@
 }
 
 @media only screen and (max-height: 500px){
-    .info {
+    .info, .contenedorDesafio {
         display:none;
     }
 }

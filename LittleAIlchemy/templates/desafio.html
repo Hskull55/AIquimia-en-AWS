@@ -25,6 +25,14 @@
     <div id="usuario" style="display: none;">{{ usuario }}</div>
     <div id="tutorial" style="display: none;">{{ tutorial }}</div>
     <div id="victoria" style="display: none;">{{ victoria }}</div>
+    <!-- Recorremos la lista top de views.py y añadimos sus valores -->
+    <div id="puntuacion" style="display: none;">
+        <div>
+            {% for usuario in top %}
+                {{ usuario.nombre }}: {{ usuario.victorias }}<br>
+            {% endfor %}
+        </div>
+    </div>
     <div class="contenedorAlquimia">
         <div class="izquierda">
             <div class="zonaCombinar">
@@ -67,6 +75,7 @@
             <button class="inicio destello" onclick="window.location.href='/'">Return <i class="bi bi-house"></i></button>
             <button onclick="mostrarTutorial()"><i class="bi bi-question-circle"></i></button>
             <button onclick="window.location.href='/alquimia'">Challenge mode <i class="bi bi-toggle-on"></i></button>
+            <button onclick="puntuacion()" class="marcador">Leaderboard <i class="bi bi-trophy"></i></button>
             <form action="/logout/" method="post">
                 {% csrf_token %}
                 <button type="submit">Log out <i class="bi bi-x-square"></i></button>

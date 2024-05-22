@@ -368,30 +368,35 @@ def desafio(request):
             else:
                 error = "Something went wrong. Try again later"
                 logger.error("{}: No se generó un elemento".format(fecha))
+    # Obtenemos el top 10 de jugadores con más victorias
+    top = victorias.objects.order_by('-victorias')[:10]
     if nuevoElemento:
         imagen = nuevoElemento.imagen
 
+    # Esto es para que el contador salga a 0 la primera vez
     contador = int(request.COOKIES.get('contador', 0))
-    contador += 1
+    if contador == 0 and 'contador' not in request.COOKIES:
+        contador = 0
+    elif nuevoElemento:
+        contador += 1
 
-    response = HttpResponse(render(request, 'desafio.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen, 'descubiertoPor':descubiertoPor, 'usuario':usuario, 'tutorial': False, 'contador':contador}))
+    response = HttpResponse(render(request, 'desafio.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen, 'descubiertoPor':descubiertoPor, 'usuario':usuario, 'tutorial': False, 'contador':contador, 'top':top}))
 
     # Esta cookie guarda el elemento aleatorio actual
     if not request.COOKIES.get('elementoAleatorio'):
         elementoAleatorio = random.choice(elementosNoBasicos)
         nombreElementoAleatorio = elementoAleatorio.nombre
         imagenElementoAleatorio = elementoAleatorio.imagen
-        response = HttpResponse(render(request, 'desafio.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen, 'descubiertoPor':descubiertoPor, 'usuario':usuario, 'tutorial': False, 'nombreElementoAleatorio':nombreElementoAleatorio, 'imagenElementoAleatorio':imagenElementoAleatorio, 'contador':contador}))
+        response = HttpResponse(render(request, 'desafio.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen, 'descubiertoPor':descubiertoPor, 'usuario':usuario, 'tutorial': False, 'nombreElementoAleatorio':nombreElementoAleatorio, 'imagenElementoAleatorio':imagenElementoAleatorio, 'contador':contador, 'top':top}))
         response.set_cookie('elementoAleatorio', nombreElementoAleatorio)
     else:
         nombreElementoAleatorio = request.COOKIES.get('elementoAleatorio')
         elementoAleatorio = dbElementos.objects.get(nombre=nombreElementoAleatorio)
         imagenElementoAleatorio = elementoAleatorio.imagen
-        response = HttpResponse(render(request, 'desafio.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen, 'descubiertoPor':descubiertoPor, 'usuario':usuario, 'tutorial': False, 'nombreElementoAleatorio':nombreElementoAleatorio, 'imagenElementoAleatorio':imagenElementoAleatorio, 'contador':contador}))
+        response = HttpResponse(render(request, 'desafio.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen, 'descubiertoPor':descubiertoPor, 'usuario':usuario, 'tutorial': False, 'nombreElementoAleatorio':nombreElementoAleatorio, 'imagenElementoAleatorio':imagenElementoAleatorio, 'contador':contador, 'top':top}))
 
     # Si consigues crear el elemento aleatorio, ganas
     if nuevoElemento and nuevoElemento.nombre == nombreElementoAleatorio:
-        print("¡Has ganado!")
         # Obtenemos el contador actual de victorias del usuario (o lo ponemos a 0)
         try:
             victoriasUsuario = victorias.objects.get(nombre=request.user.username)
@@ -408,13 +413,9 @@ def desafio(request):
         imagenElementoAleatorio = elementoAleatorio.imagen
         contador = 0
         victoria = True
-        response = HttpResponse(render(request, 'desafio.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen, 'descubiertoPor':descubiertoPor, 'usuario':usuario, 'tutorial': False, 'nombreElementoAleatorio':nombreElementoAleatorio, 'imagenElementoAleatorio':imagenElementoAleatorio, 'contador':contador, 'victoria':victoria}))
+        response = HttpResponse(render(request, 'desafio.html', {'listaElementos': listaElementos, 'nuevoElemento': nuevoElemento, 'error': error, 'descripcion':descripcion, 'imagen':imagen, 'descubiertoPor':descubiertoPor, 'usuario':usuario, 'tutorial': False, 'nombreElementoAleatorio':nombreElementoAleatorio, 'imagenElementoAleatorio':imagenElementoAleatorio, 'contador':contador, 'victoria':victoria, 'top':top}))
         response.set_cookie('elementoAleatorio', nombreElementoAleatorio)
         response.set_cookie('contador', contador)
-    # Si no, se añade 1 a tu contador
-    else:
-        #contador += 1
-        print(":(")
 
     response.set_cookie('contador', contador)
 
