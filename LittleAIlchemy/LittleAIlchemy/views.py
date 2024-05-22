@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
-from .models import dbElementos, dbCombinaciones
+from .models import dbElementos, dbCombinaciones, victorias
 from .forms import FormRegistro
 
 logger = logging.getLogger()
@@ -392,6 +392,14 @@ def desafio(request):
     # Si consigues crear el elemento aleatorio, ganas
     if nuevoElemento and nuevoElemento.nombre == nombreElementoAleatorio:
         print("¡Has ganado!")
+        # Obtenemos el contador actual de victorias del usuario (o lo ponemos a 0)
+        try:
+            victoriasUsuario = victorias.objects.get(nombre=request.user.username)
+        except victorias.DoesNotExist:
+            victoriasUsuario = victorias(nombre=request.user.username, victorias=0)
+        # Aumentamos el contador
+        victoriasUsuario.victorias += 1
+        victoriasUsuario.save()
         # Borramos las cookies al ganar para que puedas jugar otra partida
         response.delete_cookie('contador')
         response.delete_cookie('elementoAleatorio')

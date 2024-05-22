@@ -36,3 +36,17 @@ class dbCombinaciones(models.Model):
 
     def __str__(self):
         return f"ID: {self.id}, Elemento1: {self.elemento1}, Elemento2: {self.elemento2}, Resultado: {self.resultado}"
+
+# Modelo para las victorias del modo desafío
+class victorias(models.Model):
+    nombre = models.CharField(max_length=255, unique=True)
+    victorias = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        app_label = 'LittleAIlchemy'
+        db_table = 'victorias'
+        verbose_name = "Victoria"
+        verbose_name_plural = "Victorias"
+
+    def __str__(self):
+        return self.nombre
