@@ -3,6 +3,8 @@ Estamos trabajando en ello...
 
 ## Páginas y recuros consultados para la realización de este proyecto:
 
+- [Ask LibreOffice](https://ask.libreoffice.org/)
+    - [How do I begin page numbering from the second page](https://ask.libreoffice.org/t/how-do-i-begin-page-numbering-from-the-second-page/62413)
 - [AWS](https://aws.amazon.com/es/)
     - [Connecting to a DB instance running the MariaDB database engine](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ConnectToMariaDBInstance.html)
     - [Connect to the internet using an internet gateway](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html#attach-igw)
