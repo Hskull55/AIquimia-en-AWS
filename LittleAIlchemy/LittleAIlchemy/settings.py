@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-!bw*-vklu$k-l#rt+7en3o$w*+h6q^$=f+*qkah#9poqb+g=&0
 # Usar esto: python3 manage.py runserver --insecure 0.0.0.0:8000
 DEBUG = True
 
-ALLOWED_HOSTS = ['44.222.23.204', 'aiquimia.mooo.com']
+ALLOWED_HOSTS = ['44.222.23.204', 'aiquimia.mooo.com', 'aiquimia.es']
 
 
 # Application definition
@@ -164,3 +164,5 @@ LOGGING = {
         'level': 'DEBUG',
     },
 }
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
