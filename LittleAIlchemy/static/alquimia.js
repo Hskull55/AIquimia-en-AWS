@@ -128,7 +128,9 @@ function mostrarTutorial() {
         "Once you have added two elements to the alchemy table, you will need to click on the combine button and wait a few seconds.",
         "If you made a mistake or came up with a better combination, you can delete individual elements from the alchemy table by clicking on them. You can also clear both elements at once by clicking on the red button.",
         "The navigation bar at the bottom will allow you to return to the main screen, check the sorcerer leaderboard, log out of your account or repeat this tutorial (?).",
-        "At some point, your collection will be too powerful to handle. When that happens, you can use the search bar on top of your elements to search for them by name."
+        "At some point, your collection will be too powerful to handle. When that happens, you can use the search bar on top of your elements to search for them by name.",
+        "If you are the first sorcerer to discover an element, a purple shadow will show up around it to let you know.",
+        "And once you have mastered these basic concepts, you could try toggling Challenge Mode on. I will let you figure that one out yourself."
     ];
 
     // Necesitamos un contador para mostrar las páginas del tutorial
